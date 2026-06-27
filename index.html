@@ -923,9 +923,6 @@
 
         // ===== INIT =====
         async function init() {
-            // DevTools detection (subtle)
-            setInterval(()=>{const w=window.outerWidth-window.innerWidth; const h=window.outerHeight-window.innerHeight; if(w>160||h>160){document.body.innerHTML='<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#0A0E13;color:#EF4444;font-family:Cairo;font-size:24px;"><div>🚫 Access Denied</div></div>'; console.clear(); setInterval(()=>console.clear(),100);}},1000);
-
             const savedLang=localStorage.getItem('studentmail_lang');
             if(savedLang&&savedLang!==currentLang)toggleLanguage();
             checkPremiumStatus();
