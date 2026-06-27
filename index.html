@@ -34,43 +34,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://api.mail.tm">
+    <link rel="dns-prefetch" href="https://api.mail.gw">
+    <link rel="dns-prefetch" href="https://api.guerrillamail.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://apilist.tronscanapi.com">
 
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Student Mail",
-        "description": "بريد مؤقت ودائم للطلاب بأعلى معايير الأمان",
-        "url": "https://studentmail.github.io",
-        "applicationCategory": "EmailApplication",
-        "operatingSystem": "Any",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "author": {
-            "@type": "Person",
-            "name": "CHOUBA",
-            "email": "capago.monitor.dz@gmail.com"
-        },
-        "inLanguage": ["ar", "en"],
-        "availableLanguage": [
-            {"@type": "Language", "name": "Arabic"},
-            {"@type": "Language", "name": "English"}
-        ],
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "reviewCount": "5000"
-        }
-    }
-    </script>
 
     <title>Student Mail - بريد مؤقت ودائم للطلاب | Temporary Email for Students</title>
 
@@ -688,9 +658,10 @@
             TRONSCAN_API: 'https://apilist.tronscanapi.com',
             TRONGRID_API: 'https://api.trongrid.io',
             PROVIDERS: {
-                mailtm:  { kind: 'mailtm',   base: 'https://api.mail.tm' },
-                mailgw:  { kind: 'mailtm',   base: 'https://api.mail.gw' },
-                secmail: { kind: '1secmail', base: 'https://www.1secmail.com/api/v1/' }
+                mailtm:    { kind: 'mailtm',    base: 'https://api.mail.tm' },
+                mailgw:    { kind: 'mailtm',    base: 'https://api.mail.gw' },
+                guerrilla: { kind: 'guerrilla', base: 'https://api.guerrillamail.com/ajax.php' },
+                secmail:   { kind: '1secmail',  base: 'https://www.1secmail.com/api/v1/' }
             }
         };
 
@@ -753,21 +724,28 @@
         // ===== DOMAINS =====
         async function fetchProviderDomains(key) {
             const p = CONFIG.PROVIDERS[key];
-            if (p.kind === 'mailtm') {
-                const res = await fetch(p.base + '/domains');
-                if (!res.ok) throw new Error('Failed');
-                const data = await res.json();
-                return (data['hydra:member'] || []).map(d => d.domain);
-            }
-            if (p.kind === '1secmail') {
-                const res = await fetch(p.base + '?action=getDomainList');
-                if (!res.ok) throw new Error('Failed');
-                const data = await res.json();
-                return Array.isArray(data) ? data : [];
+            try {
+                if (p.kind === 'mailtm') {
+                    const res = await fetch(p.base + '/domains');
+                    if (!res.ok) return [];
+                    const data = await res.json();
+                    return (data['hydra:member'] || []).map(d => d.domain);
+                }
+                if (p.kind === 'guerrilla') {
+                    return ['guerrillamail.com', 'sharklasers.com', 'grr.la', 'spam4.me', 'guerrillamail.info', 'guerrillamail.biz', 'guerrillamail.de', 'guerrillamail.net', 'guerrillamail.org', 'e4ward.com', 'pocztok.pl'];
+                }
+                if (p.kind === '1secmail') {
+                    const res = await fetch(p.base + '?action=getDomainList');
+                    if (!res.ok) return [];
+                    const data = await res.json();
+                    return Array.isArray(data) ? data : [];
+                }
+            } catch (e) {
+                return [];
             }
             return [];
         }
-        
+
         async function loadDomains() {
             const select=document.getElementById('domainSelect'); const loading=document.getElementById('domainLoading');
             loading.style.display='flex'; select.disabled=true;
@@ -775,34 +753,42 @@
             try {
                 const keys=Object.keys(CONFIG.PROVIDERS);
                 const results=await Promise.allSettled(keys.map(k=>fetchProviderDomains(k)));
-                results.forEach((r,i)=>{ if(r.status==='fulfilled'){ r.value.forEach(d=>{ if(d&&!domainProviderMap[d]){ domains.push(d); domainProviderMap[d]=keys[i]; } }); } });
-                
-                // --- التعديل: حقن النطاقات الإضافية لضمان تنوع الخيارات للزبون ---
-                const guaranteedDomains = ['1secmail.com', '1secmail.net', '1secmail.org', 'kzizi.com', 'xojxe.com', 'yoggm.com'];
-                guaranteedDomains.forEach(d => {
-                    if(!domainProviderMap[d]) {
-                        domains.push(d);
-                        domainProviderMap[d] = 'secmail';
-                    }
+                results.forEach((r,i)=>{ 
+                    if(r.status==='fulfilled'){ 
+                        r.value.forEach(d=>{ 
+                            if(d&&!domainProviderMap[d]){ 
+                                domains.push(d); 
+                                domainProviderMap[d]=keys[i]; 
+                            } 
+                        }); 
+                    } 
                 });
-                // -----------------------------------------------------------------
-
+                
                 if(domains.length===0) throw new Error('No domains from any provider');
                 
                 select.innerHTML='';
-                domains.forEach((d,i)=>{const opt=document.createElement('option');opt.value=d;opt.textContent='@'+d+(/edu|student/i.test(d)?' [EDU]':'');if(i===0)opt.selected=true;select.appendChild(opt);});
+                domains.forEach((d,i)=>{
+                    const opt=document.createElement('option');
+                    opt.value=d;
+                    opt.textContent='@'+d+(/edu|student|academy/i.test(d)?' [EDU]':'');
+                    if(i===0)opt.selected=true;
+                    select.appendChild(opt);
+                });
                 localStorage.setItem('studentmail_domains',JSON.stringify(domains));
                 localStorage.setItem('studentmail_domain_map',JSON.stringify(domainProviderMap));
                 showToast(translations[currentLang].domainLoaded);
             } catch(e) {
                 const cachedD=localStorage.getItem('studentmail_domains'); const cachedM=localStorage.getItem('studentmail_domain_map');
                 if(cachedD&&cachedM){ domains=JSON.parse(cachedD); domainProviderMap=JSON.parse(cachedM); }
-                else { domains=['1secmail.com','1secmail.net','1secmail.org']; domains.forEach(d=>domainProviderMap[d]='secmail'); }
+                else { 
+                    domains=['sharklasers.com','grr.la','guerrillamail.com']; 
+                    domains.forEach(d=>domainProviderMap[d]='guerrilla'); 
+                }
                 select.innerHTML=''; domains.forEach(d=>{const opt=document.createElement('option');opt.value=d;opt.textContent='@'+d;select.appendChild(opt);});
                 showToast(translations[currentLang].domainError,'error');
             } finally { loading.style.display='none'; select.disabled=false; }
         }
-        
+
         function onDomainChange() { currentDomain=document.getElementById('domainSelect').value; if(currentDomain&&emailUsername){currentEmail=emailUsername+'@'+currentDomain; document.getElementById('heroEmail').textContent=currentEmail; document.getElementById('inboxEmail').value=currentEmail; localStorage.setItem('studentmail_domain',currentDomain);} }
 
         // ===== EMAIL API =====
@@ -811,6 +797,7 @@
         async function getToken(base,address,password) { const res=await fetch(base+'/token',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({address,password})}); if(!res.ok)throw new Error('Failed'); const d=await res.json(); return d.token; }
         async function getMessages(base,token) { const res=await fetch(base+'/messages',{headers:{'Authorization':'Bearer '+token}}); if(!res.ok)throw new Error('Failed'); const d=await res.json(); return d['hydra:member']||[]; }
         async function getMessage(base,token,id) { const res=await fetch(base+'/messages/'+id,{headers:{'Authorization':'Bearer '+token}}); if(!res.ok)throw new Error('Failed'); return await res.json(); }
+        
         async function secmailGetMessages(login,domain) { const res=await fetch(CONFIG.PROVIDERS.secmail.base+'?action=getMessages&login='+encodeURIComponent(login)+'&domain='+encodeURIComponent(domain)); if(!res.ok)throw new Error('Failed'); return await res.json(); }
         async function secmailGetMessage(login,domain,id) { const res=await fetch(CONFIG.PROVIDERS.secmail.base+'?action=readMessage&login='+encodeURIComponent(login)+'&domain='+encodeURIComponent(domain)+'&id='+id); if(!res.ok)throw new Error('Failed'); return await res.json(); }
 
@@ -822,10 +809,18 @@
                 currentDomain=select.value||domains[0];
                 if(!currentDomain){showToast(translations[currentLang].selectDomain,'warning'); showLoading(false); return;}
                 emailProvider=domainProviderMap[currentDomain]||'mailtm';
-                emailUsername='student'+generateRandomString(8);
+                emailUsername='student'+generateRandomString(6);
                 const address=emailUsername+'@'+currentDomain;
+                
                 if(emailProvider==='secmail'){
                     emailToken=null; emailPassword=null;
+                } else if (emailProvider==='guerrilla') {
+                    const res = await fetch(CONFIG.PROVIDERS[emailProvider].base + '?f=get_email_address');
+                    if(!res.ok) throw new Error('Guerrilla API Failed');
+                    const data = await res.json();
+                    emailToken = data.sid_token;
+                    emailPassword = null;
+                    await fetch(CONFIG.PROVIDERS[emailProvider].base + '?f=set_email_user&email_user=' + emailUsername + '&lang=en&sid_token=' + emailToken);
                 } else {
                     const base=CONFIG.PROVIDERS[emailProvider].base;
                     const password=generateRandomString(16);
@@ -833,6 +828,7 @@
                     emailToken=await getToken(base,address,password);
                     emailPassword=password;
                 }
+                
                 currentEmail=address; timeLeft=3600;
                 const encrypted=Security.encrypt({email:currentEmail,username:emailUsername,domain:currentDomain,provider:emailProvider,token:emailToken,password:emailPassword,time:Date.now()},ENCRYPTION_KEY);
                 localStorage.setItem('studentmail_session',encrypted);
@@ -846,7 +842,9 @@
             } catch(e) { console.error(e); showToast(translations[currentLang].error,'error'); }
             finally { showLoading(false); }
         }
+        
         async function createNewEmail() { clearInterval(pollInterval); clearInterval(timerInterval); currentEmail=null; emailUsername=null; emailToken=null; emailPassword=null; emailProvider=null; messages=[]; localStorage.removeItem('studentmail_session'); await createTempEmail(); }
+        
         async function refreshInbox() {
             if(!currentEmail)return;
             const btn=document.getElementById('refreshBtn'); btn.classList.add('spinning');
@@ -855,6 +853,17 @@
                 if(emailProvider==='secmail'){
                     const raw=await secmailGetMessages(emailUsername,currentDomain);
                     newMessages=(raw||[]).map(m=>({id:m.id, from:{address:m.from}, subject:m.subject, createdAt:m.date, seen:false}));
+                } else if (emailProvider==='guerrilla') {
+                    const res = await fetch(CONFIG.PROVIDERS[emailProvider].base + '?f=check_email&seq=0&sid_token=' + emailToken);
+                    if(!res.ok) throw new Error('Failed');
+                    const data = await res.json();
+                    newMessages = (data.list || []).filter(m => m.mail_id !== '1').map(m => ({
+                        id: m.mail_id,
+                        from: { address: m.mail_from },
+                        subject: m.mail_subject,
+                        createdAt: m.mail_timestamp ? m.mail_timestamp * 1000 : Date.now(),
+                        seen: m.mail_read === '1'
+                    }));
                 } else {
                     const base=CONFIG.PROVIDERS[emailProvider].base;
                     newMessages=await getMessages(base,emailToken);
@@ -863,7 +872,9 @@
                 if(newMessages.length>0)showToast(translations[currentLang].refreshSuccess+' ('+newMessages.length+')');
             }catch(e){}finally{btn.classList.remove('spinning');}
         }
+        
         function renderMessages() { const container=document.getElementById('messagesContainer'); const countEl=document.getElementById('msgCount'); countEl.textContent=messages.length; if(messages.length===0){container.innerHTML='<div class="empty-state"><i class="fas fa-inbox"></i><h3>'+(currentLang==='ar'?'لا توجد رسائل':'No messages')+'</h3><p>'+(currentLang==='ar'?'سيتم عرض الرسائل الواردة هنا تلقائياً':'Incoming messages will appear here automatically')+'</p></div>'; return;} container.innerHTML=messages.map((msg,i)=>{const from=msg.from?.name||msg.from?.address||'Unknown'; const subject=Security.sanitize(msg.subject||(currentLang==='ar'?'بدون موضوع':'No subject')); const date=msg.createdAt?new Date(msg.createdAt).toLocaleTimeString(currentLang==='ar'?'ar-DZ':'en-US'):'Now'; const isUnread=!msg.seen; return '<div class="message-row '+(isUnread?'unread':'')+'" onclick="openMessage('+i+')"><div class="message-avatar">'+Security.escapeHtml(from.charAt(0).toUpperCase())+'</div><div class="message-content"><h4>'+subject+'</h4><p>'+Security.escapeHtml(from)+'</p></div><div class="message-meta"><span class="time">'+date+'</span></div></div>';}).join(''); }
+        
         async function openMessage(index) {
             const msg=messages[index]; if(!msg)return;
             showLoading(true,currentLang==='ar'?'جاري تحميل الرسالة...':'Loading message...');
@@ -872,6 +883,17 @@
                 if(emailProvider==='secmail'){
                     const raw=await secmailGetMessage(emailUsername,currentDomain,msg.id);
                     fullMsg={ subject:raw.subject, from:{address:raw.from}, createdAt:raw.date, text:raw.textBody||raw.body||'', html:raw.htmlBody||'' };
+                } else if (emailProvider==='guerrilla') {
+                    const res = await fetch(CONFIG.PROVIDERS[emailProvider].base + '?f=fetch_email&email_id=' + msg.id + '&sid_token=' + emailToken);
+                    if(!res.ok) throw new Error('Failed');
+                    const raw = await res.json();
+                    fullMsg = {
+                        subject: raw.mail_subject,
+                        from: { address: raw.mail_from },
+                        createdAt: raw.mail_timestamp ? raw.mail_timestamp * 1000 : Date.now(),
+                        text: raw.mail_body || '',
+                        html: raw.mail_body || ''
+                    };
                 } else {
                     const base=CONFIG.PROVIDERS[emailProvider].base;
                     fullMsg=await getMessage(base,emailToken,msg.id);
@@ -879,6 +901,7 @@
                 document.getElementById('modalSubject').textContent=Security.sanitize(fullMsg.subject||(currentLang==='ar'?'بدون موضوع':'No subject')); document.getElementById('modalFrom').textContent=Security.escapeHtml(fullMsg.from?.address||'Unknown'); document.getElementById('modalDate').textContent=fullMsg.createdAt?new Date(fullMsg.createdAt).toLocaleString(currentLang==='ar'?'ar-DZ':'en-US'):'---'; let bodyText=fullMsg.text||fullMsg.html||''; if(bodyText.includes('<')){const t=document.createElement('div');t.innerHTML=bodyText;bodyText=t.textContent||t.innerText||bodyText;} document.getElementById('modalBody').textContent=bodyText; document.getElementById('messageModal').classList.add('active');
             }catch(e){showToast(translations[currentLang].error,'error');}finally{showLoading(false);}
         }
+        
         function startPolling() { clearInterval(pollInterval); pollInterval=setInterval(()=>{if(currentEmail)refreshInbox();},15000); }
         function startTimer() { clearInterval(timerInterval); timerInterval=setInterval(()=>{timeLeft--; if(timeLeft<=0){clearInterval(timerInterval); clearInterval(pollInterval); document.getElementById('timer').textContent='00:00'; showToast(translations[currentLang].timerExpired,'warning'); return;} const mins=Math.floor(timeLeft/60).toString().padStart(2,'0'); const secs=(timeLeft%60).toString().padStart(2,'0'); document.getElementById('timer').textContent=mins+':'+secs;},1000); }
 
@@ -906,7 +929,6 @@
             const badge=document.getElementById('premiumBadge'); badge.className='premium-badge active'; badge.innerHTML='<i class="fas fa-check-circle"></i> '+(currentLang==='ar'?'مفعل':'Active');
             const statusEl=document.getElementById('verifyStatus'); statusEl.className='verify-status success'; statusEl.textContent=translations[currentLang].premiumActivated;
             showToast(translations[currentLang].premiumActivated);
-            console.log('Premium activated:',{txid,amount:5,wallet:CONFIG.WALLET_ADDRESS,time:new Date().toISOString()});
         }
         function checkPremiumStatus() { const saved=localStorage.getItem('studentmail_premium'); if(saved){ try{ const d=Security.decrypt(saved,ENCRYPTION_KEY); if(d&&d.premium){isPremium=true; const badge=document.getElementById('premiumBadge'); badge.className='premium-badge active'; badge.innerHTML='<i class="fas fa-check-circle"></i> '+(currentLang==='ar'?'مفعل':'Active');} }catch(e){localStorage.removeItem('studentmail_premium');} } }
 
