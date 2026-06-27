@@ -10,7 +10,6 @@
     <meta name="googlebot" content="index, follow">
     <meta name="revisit-after" content="7 days">
 
-    <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://studentmail.github.io">
     <meta property="og:title" content="Student Mail - بريد مؤقت ودائم للطلاب">
@@ -20,33 +19,27 @@
     <meta property="og:locale:alternate" content="en_US">
     <meta property="og:site_name" content="Student Mail">
 
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Student Mail - بريد مؤقت ودائم للطلاب">
     <meta name="twitter:description" content="بريد مؤقت ودائم للطلاب بأعلى معايير الأمان">
     <meta name="twitter:image" content="https://studentmail.github.io/images/og-image.png">
     <meta name="twitter:creator" content="@chouba_dev">
 
-    <!-- Canonical URL -->
     <link rel="canonical" href="https://studentmail.github.io">
 
-    <!-- Alternate Languages -->
     <link rel="alternate" hreflang="ar" href="https://studentmail.github.io/?lang=ar">
     <link rel="alternate" hreflang="en" href="https://studentmail.github.io/?lang=en">
     <link rel="alternate" hreflang="x-default" href="https://studentmail.github.io">
 
-    <!-- Preconnect for Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://api.mail.tm">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://apilist.tronscanapi.com">
 
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
 
-    <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -352,19 +345,16 @@
     </style>
 </head>
 <body>
-    <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="spinner"></div>
         <p id="loadingText">جاري التحميل...</p>
     </div>
 
-    <!-- Toast -->
     <div class="toast" id="toast">
         <i class="fas fa-check-circle"></i>
         <span id="toastMessage">تم النسخ!</span>
     </div>
 
-    <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="#" class="logo">
@@ -385,7 +375,6 @@
         </div>
     </nav>
 
-    <!-- Hero -->
     <section class="hero" id="hero">
         <div class="container">
             <div class="hero-grid">
@@ -441,7 +430,7 @@
                                 <div class="message-sender"><i class="fas fa-bell"></i></div>
                                 <div class="message-preview">
                                     <h4 data-ar="مرحباً بك في Student Mail!" data-en="Welcome to Student Mail!">مرحباً بك في Student Mail!</h4>
-                                    <p data-ar="اختر نطاق @edu وانقر لإنشاء بريدك" data-en="Choose @edu domain and click to create your email">اختر نطاق @edu وانقر لإنشاء بريدك</p>
+                                    <p data-ar="اختر النطاق وانقر لإنشاء بريدك" data-en="Choose domain and click to create your email">اختر النطاق وانقر لإنشاء بريدك</p>
                                 </div>
                                 <span class="message-time">الآن</span>
                             </div>
@@ -452,7 +441,6 @@
         </div>
     </section>
 
-    <!-- Inbox -->
     <section class="inbox-section" id="inbox">
         <div class="container">
             <div class="section-header">
@@ -462,7 +450,7 @@
             <div class="inbox-grid">
                 <div class="inbox-sidebar">
                     <div class="domain-selector">
-                        <label data-ar="اختر النطاق (@edu متاح)" data-en="Select Domain (@edu available)">اختر النطاق (@edu متاح)</label>
+                        <label data-ar="اختر النطاق" data-en="Select Domain">اختر النطاق</label>
                         <select class="domain-select" id="domainSelect" onchange="onDomainChange()">
                             <option value="" data-ar="جاري تحميل النطاقات..." data-en="Loading domains...">جاري تحميل النطاقات...</option>
                         </select>
@@ -513,7 +501,6 @@
         </div>
     </section>
 
-    <!-- Services -->
     <section class="services-section" id="services">
         <div class="container">
             <div class="section-header">
@@ -538,7 +525,6 @@
                     <p data-ar="بريد إلكتروني دائم مخصص للطلاب باسم نطاق احترافي. استخدمه للتواصل الأكاديمي." data-en="A permanent email dedicated to students with a professional domain name. Use it for academic communication.">بريد إلكتروني دائم مخصص للطلاب باسم نطاق احترافي. استخدمه للتواصل الأكاديمي.</p>
                     <ul class="service-features">
                         <li><i class="fas fa-check"></i> <span data-ar="عنوان دائم" data-en="Permanent address">عنوان دائم</span></li>
-                        <li><i class="fas fa-check"></i> <span data-ar="نطاق @edu" data-en="@edu domain">نطاق @edu</span></li>
                         <li><i class="fas fa-check"></i> <span data-ar="دعم فني" data-en="Technical support">دعم فني</span></li>
                         <li><i class="fas fa-check"></i> <span data-ar="تكامل مع Google" data-en="Google integration">تكامل مع Google</span></li>
                     </ul>
@@ -558,7 +544,6 @@
         </div>
     </section>
 
-    <!-- Pricing -->
     <section class="pricing-section" id="pricing">
         <div class="container">
             <div class="section-header">
@@ -604,7 +589,6 @@
         </div>
     </section>
 
-    <!-- Wallet -->
     <section class="wallet-section" id="wallet">
         <div class="container">
             <div class="wallet-box">
@@ -631,7 +615,6 @@
         </div>
     </section>
 
-    <!-- Contact -->
     <section class="contact-section" id="contact">
         <div class="container">
             <div class="section-header">
@@ -657,7 +640,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -679,7 +661,6 @@
         </div>
     </footer>
 
-    <!-- Message Modal -->
     <div class="modal-overlay" id="messageModal" role="dialog" aria-modal="true" aria-labelledby="modalSubject">
         <div class="modal-content">
             <div class="modal-header">
@@ -706,9 +687,6 @@
             USDT_CONTRACT: 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
             TRONSCAN_API: 'https://apilist.tronscanapi.com',
             TRONGRID_API: 'https://api.trongrid.io',
-            // Multiple keyless, CORS-friendly temp-mail providers combined for more real domains.
-            // mail.tm and mail.gw share an identical API (just a different base URL).
-            // 1secmail has its own simpler GET-only API and needs no account/token.
             PROVIDERS: {
                 mailtm:  { kind: 'mailtm',   base: 'https://api.mail.tm' },
                 mailgw:  { kind: 'mailtm',   base: 'https://api.mail.gw' },
@@ -789,6 +767,7 @@
             }
             return [];
         }
+        
         async function loadDomains() {
             const select=document.getElementById('domainSelect'); const loading=document.getElementById('domainLoading');
             loading.style.display='flex'; select.disabled=true;
@@ -797,10 +776,19 @@
                 const keys=Object.keys(CONFIG.PROVIDERS);
                 const results=await Promise.allSettled(keys.map(k=>fetchProviderDomains(k)));
                 results.forEach((r,i)=>{ if(r.status==='fulfilled'){ r.value.forEach(d=>{ if(d&&!domainProviderMap[d]){ domains.push(d); domainProviderMap[d]=keys[i]; } }); } });
+                
+                // --- التعديل: حقن النطاقات الإضافية لضمان تنوع الخيارات للزبون ---
+                const guaranteedDomains = ['1secmail.com', '1secmail.net', '1secmail.org', 'kzizi.com', 'xojxe.com', 'yoggm.com'];
+                guaranteedDomains.forEach(d => {
+                    if(!domainProviderMap[d]) {
+                        domains.push(d);
+                        domainProviderMap[d] = 'secmail';
+                    }
+                });
+                // -----------------------------------------------------------------
+
                 if(domains.length===0) throw new Error('No domains from any provider');
-                const edu=domains.filter(d=>/edu|student|academy|school|college|uni/i.test(d));
-                const other=domains.filter(d=>!edu.includes(d));
-                domains=[...edu,...other];
+                
                 select.innerHTML='';
                 domains.forEach((d,i)=>{const opt=document.createElement('option');opt.value=d;opt.textContent='@'+d+(/edu|student/i.test(d)?' [EDU]':'');if(i===0)opt.selected=true;select.appendChild(opt);});
                 localStorage.setItem('studentmail_domains',JSON.stringify(domains));
@@ -814,6 +802,7 @@
                 showToast(translations[currentLang].domainError,'error');
             } finally { loading.style.display='none'; select.disabled=false; }
         }
+        
         function onDomainChange() { currentDomain=document.getElementById('domainSelect').value; if(currentDomain&&emailUsername){currentEmail=emailUsername+'@'+currentDomain; document.getElementById('heroEmail').textContent=currentEmail; document.getElementById('inboxEmail').value=currentEmail; localStorage.setItem('studentmail_domain',currentDomain);} }
 
         // ===== EMAIL API =====
