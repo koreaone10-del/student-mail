@@ -663,7 +663,7 @@
         // ===== CONFIG =====
         const CONFIG = {
             WALLET_ADDRESS: 'TTrYhS7Y8t1bqJEPST2DaGrAH3oKUni6YN',
-            PREMIUM_PRICE: 2, // تم تغيير السعر إلى 2 دولار
+            PREMIUM_PRICE: 2,
             USDT_CONTRACT: 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
             TRONSCAN_API: 'https://apilist.tronscanapi.com',
             TRONGRID_API: 'https://api.trongrid.io',
@@ -695,12 +695,31 @@
             sanitize(input) { return typeof input === 'string' ? input.replace(/[<>'"]/g, c=>({'<':'&lt;','>':'&gt;',"'":'&#x27;','"':'&quot;'}[c])) : ''; },
             escapeHtml(t) { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; },
             getFingerprint() {
-                const c=document.createElement('canvas'); const x=c.getContext('2d');
-                x.textBaseline='top'; x.font='14px Arial'; x.fillText('SM',2,2);
-                return btoa(c.toDataURL()).slice(0,32);
+                try {
+                    const c=document.createElement('canvas'); 
+                    const x=c.getContext('2d');
+                    if(!x) return 'fallback_key_no_canvas';
+                    x.textBaseline='top'; x.font='14px Arial'; x.fillText('SM',2,2);
+                    return btoa(c.toDataURL()).slice(0,32);
+                } catch(e) {
+                    // حماية متقدمة: إذا منع متصفح الهاتف (مثل كروم أندرويد) الوصول، نمرر مفتاح بديل حتى لا يتعطل السكريبت
+                    return 'fallback_mobile_key_123';
+                }
             },
-            encrypt(data, key) { const t=JSON.stringify(data); let r=''; for(let i=0;i<t.length;i++)r+=String.fromCharCode(t.charCodeAt(i)^key.charCodeAt(i%key.length)); return btoa(r); },
-            decrypt(data, key) { try{const t=atob(data); let r=''; for(let i=0;i<t.length;i++)r+=String.fromCharCode(t.charCodeAt(i)^key.charCodeAt(i%key.length)); return JSON.parse(r);}catch(e){return null;} }
+            encrypt(data, key) { 
+                try {
+                    const t=JSON.stringify(data); let r=''; 
+                    for(let i=0;i<t.length;i++) r+=String.fromCharCode(t.charCodeAt(i)^key.charCodeAt(i%key.length)); 
+                    return btoa(r); 
+                } catch(e) { return null; }
+            },
+            decrypt(data, key) { 
+                try{
+                    const t=atob(data); let r=''; 
+                    for(let i=0;i<t.length;i++) r+=String.fromCharCode(t.charCodeAt(i)^key.charCodeAt(i%key.length)); 
+                    return JSON.parse(r);
+                }catch(e){return null;} 
+            }
         };
 
         const ENCRYPTION_KEY = Security.getFingerprint();
@@ -714,44 +733,80 @@
         // ===== UI FUNCTIONS =====
         function showToast(message, type='success') {
             const toast = document.getElementById('toast');
+            if(!toast) return;
             const icon = toast.querySelector('i');
-            document.getElementById('toastMessage').textContent = message;
+            const msgEl = document.getElementById('toastMessage');
+            if(msgEl) msgEl.textContent = message;
             toast.className = 'toast ' + type;
-            icon.className = type==='error'?'fas fa-exclamation-circle':type==='warning'?'fas fa-exclamation-triangle':type==='info'?'fas fa-info-circle':'fas fa-check-circle';
+            if(icon) icon.className = type==='error'?'fas fa-exclamation-circle':type==='warning'?'fas fa-exclamation-triangle':type==='info'?'fas fa-info-circle':'fas fa-check-circle';
             toast.classList.add('show');
             setTimeout(()=>toast.classList.remove('show'), 4000);
         }
-        function showLoading(show, text) { const o=document.getElementById('loadingOverlay'); if(text)document.getElementById('loadingText').textContent=text; o.classList.toggle('active',show); }
-        async function copyToClipboard(text) { try{await navigator.clipboard.writeText(text);showToast(translations[currentLang].copied);}catch(e){const i=document.createElement('input');i.value=text;document.body.appendChild(i);i.select();document.execCommand('copy');document.body.removeChild(i);showToast(translations[currentLang].copied);} }
+        function showLoading(show, text) { 
+            const o=document.getElementById('loadingOverlay'); 
+            const txt=document.getElementById('loadingText');
+            if(!o) return;
+            if(text && txt) txt.textContent=text; 
+            o.classList.toggle('active',show); 
+        }
+        async function copyToClipboard(text) { 
+            try{
+                await navigator.clipboard.writeText(text);
+                showToast(translations[currentLang].copied);
+            }catch(e){
+                const i=document.createElement('input');
+                i.value=text;
+                document.body.appendChild(i);
+                i.select();
+                document.execCommand('copy');
+                document.body.removeChild(i);
+                showToast(translations[currentLang].copied);
+            } 
+        }
         function copyEmail() { if(currentEmail)copyToClipboard(currentEmail); }
         function copyInboxEmail() { if(currentEmail)copyToClipboard(currentEmail); }
         function copyWallet() { copyToClipboard(CONFIG.WALLET_ADDRESS); }
         
         function updateCustomInputUI() {
             const input = document.getElementById('customUsername');
+            if(!input) return; // حماية في حالة تم تشغيل كود HTML قديم
             if(isPremium) {
                 input.disabled = false;
-                input.placeholder = translations[currentLang].placeholderInput;
+                input.placeholder = translations[currentLang].placeholderInput || 'مثال: ali2026';
             } else {
                 input.disabled = true;
                 input.value = '';
-                input.placeholder = translations[currentLang].lockedInput;
+                input.placeholder = translations[currentLang].lockedInput || '🔒 للمشتركين فقط';
             }
         }
         
         function toggleLanguage() { 
-            currentLang=currentLang==='ar'?'en':'ar'; 
-            document.documentElement.lang=currentLang; 
-            document.documentElement.dir=currentLang==='ar'?'rtl':'ltr'; 
-            document.getElementById('langBtn').textContent=currentLang==='ar'?'EN':'AR'; 
-            document.querySelectorAll('[data-ar][data-en]').forEach(el=>{if(el.tagName!=='INPUT'||!el.hasAttribute('value'))el.innerHTML=el.getAttribute('data-'+currentLang);}); 
-            localStorage.setItem('studentmail_lang',currentLang); 
+            currentLang = currentLang === 'ar' ? 'en' : 'ar'; 
+            document.documentElement.lang = currentLang; 
+            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr'; 
+            const langBtn = document.getElementById('langBtn');
+            if(langBtn) langBtn.textContent = currentLang === 'ar' ? 'EN' : 'AR'; 
+            document.querySelectorAll('[data-ar][data-en]').forEach(el => {
+                if(el.tagName !== 'INPUT' || !el.hasAttribute('value')) {
+                    el.innerHTML = el.getAttribute('data-' + currentLang);
+                }
+            }); 
+            try { localStorage.setItem('studentmail_lang', currentLang); } catch(e){}
             updateCustomInputUI();
         }
         
-        function scrollToWallet() { document.getElementById('wallet').scrollIntoView({behavior:'smooth'}); }
-        function toggleMobileMenu() { document.getElementById('navLinks').classList.toggle('active'); }
-        function closeModal() { document.getElementById('messageModal').classList.remove('active'); }
+        function scrollToWallet() { 
+            const w = document.getElementById('wallet');
+            if(w) w.scrollIntoView({behavior:'smooth'}); 
+        }
+        function toggleMobileMenu() { 
+            const nav = document.getElementById('navLinks');
+            if(nav) nav.classList.toggle('active'); 
+        }
+        function closeModal() { 
+            const m = document.getElementById('messageModal');
+            if(m) m.classList.remove('active'); 
+        }
 
         // ===== DOMAINS =====
         async function fetchProviderDomains(key) {
@@ -764,7 +819,7 @@
                     return (data['hydra:member'] || []).map(d => d.domain);
                 }
                 if (p.kind === 'guerrilla') {
-                    // تم حذف النطاقات التي طلبت إزالتها
+                    // تم إزالة النطاقات المعطلة التي طلبتها
                     return ['guerrillamail.com', 'sharklasers.com', 'grr.la', 'guerrillamail.info', 'guerrillamail.biz', 'guerrillamail.de', 'guerrillamail.net', 'guerrillamail.org'];
                 }
                 if (p.kind === '1secmail') {
@@ -780,9 +835,12 @@
         }
 
         async function loadDomains() {
-            const select=document.getElementById('domainSelect'); const loading=document.getElementById('domainLoading');
-            loading.style.display='flex'; select.disabled=true;
+            const select=document.getElementById('domainSelect'); 
+            const loading=document.getElementById('domainLoading');
+            if(loading) loading.style.display='flex'; 
+            if(select) select.disabled=true;
             domains=[]; domainProviderMap={};
+            
             try {
                 const keys=Object.keys(CONFIG.PROVIDERS);
                 const results=await Promise.allSettled(keys.map(k=>fetchProviderDomains(k)));
@@ -797,7 +855,7 @@
                     } 
                 });
                 
-                // إضافة نطاقات 1secmail يدوياً كاحتياط في حال فشل الـ API في سحبها
+                // إضافة نطاقات احتياطية موثوقة
                 const backup1SecDomains = ['1secmail.com', '1secmail.org', '1secmail.net', 'kzizi.com', 'xojxe.com', 'yoggm.com'];
                 backup1SecDomains.forEach(d => {
                     if(!domainProviderMap[d]) {
@@ -806,32 +864,71 @@
                     }
                 });
 
-                if(domains.length===0) throw new Error('No domains from any provider');
+                if(domains.length===0) throw new Error('No domains');
                 
-                select.innerHTML='';
-                domains.forEach((d,i)=>{
-                    const opt=document.createElement('option');
-                    opt.value=d;
-                    opt.textContent='@'+d+(/edu|student|academy/i.test(d)?' [EDU]':'');
-                    if(i===0)opt.selected=true;
-                    select.appendChild(opt);
-                });
-                localStorage.setItem('studentmail_domains',JSON.stringify(domains));
-                localStorage.setItem('studentmail_domain_map',JSON.stringify(domainProviderMap));
-                showToast(translations[currentLang].domainLoaded);
+                if(select) {
+                    select.innerHTML='';
+                    domains.forEach((d,i)=>{
+                        const opt=document.createElement('option');
+                        opt.value=d;
+                        opt.textContent='@'+d+(/edu|student|academy/i.test(d)?' [EDU]':'');
+                        if(i===0)opt.selected=true;
+                        select.appendChild(opt);
+                    });
+                }
+                try {
+                    localStorage.setItem('studentmail_domains',JSON.stringify(domains));
+                    localStorage.setItem('studentmail_domain_map',JSON.stringify(domainProviderMap));
+                } catch(e){}
+                
             } catch(e) {
-                const cachedD=localStorage.getItem('studentmail_domains'); const cachedM=localStorage.getItem('studentmail_domain_map');
-                if(cachedD&&cachedM){ domains=JSON.parse(cachedD); domainProviderMap=JSON.parse(cachedM); }
-                else { 
+                let cachedD = null, cachedM = null;
+                try {
+                    cachedD=localStorage.getItem('studentmail_domains'); 
+                    cachedM=localStorage.getItem('studentmail_domain_map');
+                } catch(err){}
+                
+                if(cachedD&&cachedM){ 
+                    try {
+                        domains=JSON.parse(cachedD); 
+                        domainProviderMap=JSON.parse(cachedM); 
+                    } catch(err) {
+                        domains=['sharklasers.com','grr.la','guerrillamail.com']; 
+                        domains.forEach(d=>domainProviderMap[d]='guerrilla'); 
+                    }
+                } else { 
                     domains=['sharklasers.com','grr.la','guerrillamail.com']; 
                     domains.forEach(d=>domainProviderMap[d]='guerrilla'); 
                 }
-                select.innerHTML=''; domains.forEach(d=>{const opt=document.createElement('option');opt.value=d;opt.textContent='@'+d;select.appendChild(opt);});
+                
+                if(select) {
+                    select.innerHTML=''; 
+                    domains.forEach(d=>{
+                        const opt=document.createElement('option');
+                        opt.value=d;
+                        opt.textContent='@'+d;
+                        select.appendChild(opt);
+                    });
+                }
                 showToast(translations[currentLang].domainError,'error');
-            } finally { loading.style.display='none'; select.disabled=false; }
+            } finally { 
+                if(loading) loading.style.display='none'; 
+                if(select) select.disabled=false; 
+            }
         }
 
-        function onDomainChange() { currentDomain=document.getElementById('domainSelect').value; if(currentDomain&&emailUsername){currentEmail=emailUsername+'@'+currentDomain; document.getElementById('heroEmail').textContent=currentEmail; document.getElementById('inboxEmail').value=currentEmail; localStorage.setItem('studentmail_domain',currentDomain);} }
+        function onDomainChange() { 
+            const select = document.getElementById('domainSelect');
+            currentDomain = select ? select.value : null; 
+            if(currentDomain && emailUsername){
+                currentEmail = emailUsername+'@'+currentDomain; 
+                const hEmail = document.getElementById('heroEmail');
+                const iEmail = document.getElementById('inboxEmail');
+                if(hEmail) hEmail.textContent=currentEmail; 
+                if(iEmail) iEmail.value=currentEmail; 
+                try{ localStorage.setItem('studentmail_domain',currentDomain); }catch(e){}
+            } 
+        }
 
         // ===== EMAIL API =====
         function generateRandomString(length) { const chars='abcdefghijklmnopqrstuvwxyz0123456789'; let r=''; for(let i=0;i<length;i++)r+=chars.charAt(Math.floor(Math.random()*chars.length)); return r; }
@@ -847,23 +944,29 @@
             showLoading(true, currentLang==='ar'?'جاري إنشاء بريدك...':'Creating your email...');
             try {
                 const select=document.getElementById('domainSelect');
-                if(!domains.length||select.options.length<=1)await loadDomains();
-                currentDomain=select.value||domains[0];
-                if(!currentDomain){showToast(translations[currentLang].selectDomain,'warning'); showLoading(false); return;}
+                if(!domains.length || (select && select.options.length<=1)) await loadDomains();
                 
-                emailProvider=domainProviderMap[currentDomain]||'mailtm';
+                currentDomain = select ? select.value : domains[0];
+                if(!currentDomain){
+                    showToast(translations[currentLang].selectDomain,'warning'); 
+                    showLoading(false); 
+                    return;
+                }
+                
+                emailProvider = domainProviderMap[currentDomain] || 'mailtm';
                 
                 let requestedName = '';
                 if (isPremium) {
-                    requestedName = document.getElementById('customUsername').value.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+                    const input = document.getElementById('customUsername');
+                    if(input) requestedName = input.value.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
                 }
                 
                 emailUsername = requestedName ? requestedName : 'student' + generateRandomString(6);
                 const address = emailUsername + '@' + currentDomain;
                 
-                if(emailProvider==='secmail'){
+                if(emailProvider === 'secmail'){
                     emailToken=null; emailPassword=null;
-                } else if (emailProvider==='guerrilla') {
+                } else if (emailProvider === 'guerrilla') {
                     const res = await fetch(CONFIG.PROVIDERS[emailProvider].base + '?f=get_email_address');
                     if(!res.ok) throw new Error('Guerrilla API Failed');
                     const data = await res.json();
@@ -871,8 +974,8 @@
                     emailPassword = null;
                     await fetch(CONFIG.PROVIDERS[emailProvider].base + '?f=set_email_user&email_user=' + emailUsername + '&lang=en&sid_token=' + emailToken);
                 } else {
-                    const base=CONFIG.PROVIDERS[emailProvider].base;
-                    const password=generateRandomString(16);
+                    const base = CONFIG.PROVIDERS[emailProvider].base;
+                    const password = generateRandomString(16);
                     try {
                         await createAccount(base, address, password);
                     } catch (err) {
@@ -880,39 +983,59 @@
                         showLoading(false);
                         return;
                     }
-                    emailToken=await getToken(base,address,password);
-                    emailPassword=password;
+                    emailToken = await getToken(base, address, password);
+                    emailPassword = password;
                 }
                 
-                currentEmail=address; 
-                // ضبط الوقت: المدفوع 30 يوم ، المجاني ساعة واحدة
+                currentEmail = address; 
                 timeLeft = isPremium ? 2592000 : 3600; 
                 
-                const encrypted=Security.encrypt({email:currentEmail,username:emailUsername,domain:currentDomain,provider:emailProvider,token:emailToken,password:emailPassword,time:Date.now()},ENCRYPTION_KEY);
-                localStorage.setItem('studentmail_session',encrypted);
-                document.getElementById('heroEmail').textContent=currentEmail;
-                document.getElementById('inboxEmail').value=currentEmail;
-                document.getElementById('inbox').classList.add('active');
-                document.getElementById('inbox').scrollIntoView({behavior:'smooth'});
-                startTimer(); startPolling();
+                const encrypted = Security.encrypt({email:currentEmail,username:emailUsername,domain:currentDomain,provider:emailProvider,token:emailToken,password:emailPassword,time:Date.now()}, ENCRYPTION_KEY);
+                try { localStorage.setItem('studentmail_session', encrypted); } catch(e){}
+                
+                const hEmail = document.getElementById('heroEmail');
+                const iEmail = document.getElementById('inboxEmail');
+                const inboxSect = document.getElementById('inbox');
+                
+                if(hEmail) hEmail.textContent = currentEmail;
+                if(iEmail) iEmail.value = currentEmail;
+                if(inboxSect) {
+                    inboxSect.classList.add('active');
+                    inboxSect.scrollIntoView({behavior:'smooth'});
+                }
+                
+                startTimer(); 
+                startPolling();
                 showToast(translations[currentLang].emailCreated);
                 await refreshInbox();
-            } catch(e) { console.error(e); showToast(translations[currentLang].error,'error'); }
-            finally { showLoading(false); }
+            } catch(e) { 
+                console.error(e); 
+                showToast(translations[currentLang].error,'error'); 
+            } finally { 
+                showLoading(false); 
+            }
         }
         
-        async function createNewEmail() { clearInterval(pollInterval); clearInterval(timerInterval); currentEmail=null; emailUsername=null; emailToken=null; emailPassword=null; emailProvider=null; messages=[]; localStorage.removeItem('studentmail_session'); await createTempEmail(); }
+        async function createNewEmail() { 
+            clearInterval(pollInterval); 
+            clearInterval(timerInterval); 
+            currentEmail=null; emailUsername=null; emailToken=null; emailPassword=null; emailProvider=null; messages=[]; 
+            try{ localStorage.removeItem('studentmail_session'); }catch(e){}
+            await createTempEmail(); 
+        }
         
         async function refreshInbox() {
             if(!currentEmail)return;
-            const btn=document.getElementById('refreshBtn'); btn.classList.add('spinning');
+            const btn=document.getElementById('refreshBtn'); 
+            if(btn) btn.classList.add('spinning');
+            
             try{
                 let newMessages;
                 if(emailProvider==='secmail'){
                     const raw=await secmailGetMessages(emailUsername,currentDomain);
                     newMessages=(raw||[]).map(m=>({id:m.id, from:{address:m.from}, subject:m.subject, createdAt:m.date, seen:false}));
                 } else if (emailProvider==='guerrilla') {
-                    // تم تغيير دالة التحديث لتجلب كامل الصندوق بدلاً من الرسائل الجديدة فقط لتفادي مشكلة اختفاء الرسائل
+                    // تم التعديل لجلب القائمة كاملة لتفادي اختفاء الرسائل
                     const res = await fetch(CONFIG.PROVIDERS[emailProvider].base + '?f=get_email_list&offset=0&sid_token=' + emailToken);
                     if(!res.ok) throw new Error('Failed');
                     const data = await res.json();
@@ -927,12 +1050,34 @@
                     const base=CONFIG.PROVIDERS[emailProvider].base;
                     newMessages=await getMessages(base,emailToken);
                 }
-                messages=newMessages; renderMessages();
-                if(newMessages.length>0)showToast(translations[currentLang].refreshSuccess+' ('+newMessages.length+')');
-            }catch(e){}finally{btn.classList.remove('spinning');}
+                messages = newMessages; 
+                renderMessages();
+                if(newMessages.length > 0) showToast(translations[currentLang].refreshSuccess+' ('+newMessages.length+')');
+            }catch(e){
+            }finally{
+                if(btn) btn.classList.remove('spinning');
+            }
         }
         
-        function renderMessages() { const container=document.getElementById('messagesContainer'); const countEl=document.getElementById('msgCount'); countEl.textContent=messages.length; if(messages.length===0){container.innerHTML='<div class="empty-state"><i class="fas fa-inbox"></i><h3>'+(currentLang==='ar'?'لا توجد رسائل':'No messages')+'</h3><p>'+(currentLang==='ar'?'سيتم عرض الرسائل الواردة هنا تلقائياً':'Incoming messages will appear here automatically')+'</p></div>'; return;} container.innerHTML=messages.map((msg,i)=>{const from=msg.from?.name||msg.from?.address||'Unknown'; const subject=Security.sanitize(msg.subject||(currentLang==='ar'?'بدون موضوع':'No subject')); const date=msg.createdAt?new Date(msg.createdAt).toLocaleTimeString(currentLang==='ar'?'ar-DZ':'en-US'):'Now'; const isUnread=!msg.seen; return '<div class="message-row '+(isUnread?'unread':'')+'" onclick="openMessage('+i+')"><div class="message-avatar">'+Security.escapeHtml(from.charAt(0).toUpperCase())+'</div><div class="message-content"><h4>'+subject+'</h4><p>'+Security.escapeHtml(from)+'</p></div><div class="message-meta"><span class="time">'+date+'</span></div></div>';}).join(''); }
+        function renderMessages() { 
+            const container=document.getElementById('messagesContainer'); 
+            const countEl=document.getElementById('msgCount'); 
+            if(countEl) countEl.textContent=messages.length; 
+            if(!container) return;
+            
+            if(messages.length===0){
+                container.innerHTML='<div class="empty-state"><i class="fas fa-inbox"></i><h3>'+(currentLang==='ar'?'لا توجد رسائل':'No messages')+'</h3><p>'+(currentLang==='ar'?'سيتم عرض الرسائل الواردة هنا تلقائياً':'Incoming messages will appear here automatically')+'</p></div>'; 
+                return;
+            } 
+            
+            container.innerHTML=messages.map((msg,i)=>{
+                const from=msg.from?.name||msg.from?.address||'Unknown'; 
+                const subject=Security.sanitize(msg.subject||(currentLang==='ar'?'بدون موضوع':'No subject')); 
+                const date=msg.createdAt?new Date(msg.createdAt).toLocaleTimeString(currentLang==='ar'?'ar-DZ':'en-US'):'Now'; 
+                const isUnread=!msg.seen; 
+                return '<div class="message-row '+(isUnread?'unread':'')+'" onclick="openMessage('+i+')"><div class="message-avatar">'+Security.escapeHtml(from.charAt(0).toUpperCase())+'</div><div class="message-content"><h4>'+subject+'</h4><p>'+Security.escapeHtml(from)+'</p></div><div class="message-meta"><span class="time">'+date+'</span></div></div>';
+            }).join(''); 
+        }
         
         async function openMessage(index) {
             const msg=messages[index]; if(!msg)return;
@@ -957,30 +1102,61 @@
                     const base=CONFIG.PROVIDERS[emailProvider].base;
                     fullMsg=await getMessage(base,emailToken,msg.id);
                 }
-                document.getElementById('modalSubject').textContent=Security.sanitize(fullMsg.subject||(currentLang==='ar'?'بدون موضوع':'No subject')); document.getElementById('modalFrom').textContent=Security.escapeHtml(fullMsg.from?.address||'Unknown'); document.getElementById('modalDate').textContent=fullMsg.createdAt?new Date(fullMsg.createdAt).toLocaleString(currentLang==='ar'?'ar-DZ':'en-US'):'---'; let bodyText=fullMsg.text||fullMsg.html||''; if(bodyText.includes('<')){const t=document.createElement('div');t.innerHTML=bodyText;bodyText=t.textContent||t.innerText||bodyText;} document.getElementById('modalBody').textContent=bodyText; document.getElementById('messageModal').classList.add('active');
-            }catch(e){showToast(translations[currentLang].error,'error');}finally{showLoading(false);}
+                
+                const mSubj = document.getElementById('modalSubject');
+                const mFrom = document.getElementById('modalFrom');
+                const mDate = document.getElementById('modalDate');
+                const mBody = document.getElementById('modalBody');
+                const mModal = document.getElementById('messageModal');
+                
+                if(mSubj) mSubj.textContent=Security.sanitize(fullMsg.subject||(currentLang==='ar'?'بدون موضوع':'No subject')); 
+                if(mFrom) mFrom.textContent=Security.escapeHtml(fullMsg.from?.address||'Unknown'); 
+                if(mDate) mDate.textContent=fullMsg.createdAt?new Date(fullMsg.createdAt).toLocaleString(currentLang==='ar'?'ar-DZ':'en-US'):'---'; 
+                
+                let bodyText = fullMsg.text||fullMsg.html||''; 
+                if(bodyText.includes('<')){
+                    const t=document.createElement('div');
+                    t.innerHTML=bodyText;
+                    bodyText=t.textContent||t.innerText||bodyText;
+                } 
+                
+                if(mBody) mBody.textContent=bodyText; 
+                if(mModal) mModal.classList.add('active');
+            }catch(e){
+                showToast(translations[currentLang].error,'error');
+            }finally{
+                showLoading(false);
+            }
         }
         
-        function startPolling() { clearInterval(pollInterval); pollInterval=setInterval(()=>{if(currentEmail)refreshInbox();},15000); }
+        function startPolling() { 
+            clearInterval(pollInterval); 
+            pollInterval = setInterval(() => { if(currentEmail) refreshInbox(); }, 15000); 
+        }
+        
         function startTimer() { 
             clearInterval(timerInterval); 
-            timerInterval=setInterval(()=>{
+            timerInterval = setInterval(() => {
                 timeLeft--; 
-                if(timeLeft<=0){
+                const timerEl = document.getElementById('timer');
+                
+                if(timeLeft <= 0){
                     clearInterval(timerInterval); 
                     clearInterval(pollInterval); 
-                    document.getElementById('timer').textContent='00:00'; 
+                    if(timerEl) timerEl.textContent='00:00'; 
                     showToast(translations[currentLang].timerExpired,'warning'); 
                     return;
                 } 
                 
-                if (isPremium) {
-                    const days = Math.floor(timeLeft / 86400);
-                    document.getElementById('timer').textContent = days + " " + translations[currentLang].daysLeft;
-                } else {
-                    const mins=Math.floor(timeLeft/60).toString().padStart(2,'0'); 
-                    const secs=(timeLeft%60).toString().padStart(2,'0'); 
-                    document.getElementById('timer').textContent=mins+':'+secs;
+                if(timerEl) {
+                    if (isPremium) {
+                        const days = Math.floor(timeLeft / 86400);
+                        timerEl.textContent = days + " " + (translations[currentLang].daysLeft || 'يوم');
+                    } else {
+                        const mins = Math.floor(timeLeft/60).toString().padStart(2,'0'); 
+                        const secs = (timeLeft%60).toString().padStart(2,'0'); 
+                        timerEl.textContent = mins + ':' + secs;
+                    }
                 }
             }, 1000); 
         }
@@ -988,34 +1164,10 @@
         // ===== PAYMENT =====
         async function verifyPayment() {
             if(!Security.rateLimit.check('verify_payment',5,60000)){showToast(translations[currentLang].rateLimit,'warning'); return;}
-            const txidInput=document.getElementById('txidInput'); const statusEl=document.getElementById('verifyStatus'); const verifyBtn=document.getElementById('verifyBtn');
-            const txid=txidInput.value.trim();
-            if(!txid){showToast(translations[currentLang].enterTxid,'warning'); return;}
-            if(!/^[a-f0-9]{64}$/i.test(txid)){showToast(translations[currentLang].invalidTxid,'error'); return;}
-            if(isPremium){showToast(translations[currentLang].premiumAlready,'warning'); return;}
-            verifyBtn.disabled=true; statusEl.className='verify-status pending'; statusEl.textContent=currentLang==='ar'?'جاري التحقق...':'Verifying...';
-            try {
-                let verified=false;
-                try{ const res=await fetch(CONFIG.TRONSCAN_API+'/api/transaction-info?hash='+encodeURIComponent(txid)); if(res.ok){ const d=await res.json(); if(d&&d.hash){ const toAddr=(d.toAddress||d.contractData?.[0]?.parameter?.value?.to_address||'').toLowerCase(); const amount=parseInt(d.contractData?.[0]?.parameter?.value?.amount||'0')/1e6; if(toAddr===CONFIG.WALLET_ADDRESS.toLowerCase()&&amount>=CONFIG.PREMIUM_PRICE*0.95)verified=true; } } }catch(e){}
-                if(!verified){ try{ const res=await fetch(CONFIG.TRONGRID_API+'/v1/transactions/'+txid+'/events'); if(res.ok){ const d=await res.json(); const events=d.data||[]; for(const event of events){ const toAddr=(event.result?.to||event.result?.['_to']||'').toLowerCase(); const amount=parseInt(event.result?.value||event.result?.['_value']||'0')/1e6; if(toAddr===CONFIG.WALLET_ADDRESS.toLowerCase()&&amount>=CONFIG.PREMIUM_PRICE*0.95){verified=true; break;} } } }catch(e){} }
-                if(verified){ activatePremium(txid); } else { statusEl.className='verify-status error'; statusEl.textContent=translations[currentLang].verifyError; showToast(translations[currentLang].verifyError,'error'); }
-            } catch(e) { statusEl.className='verify-status error'; statusEl.textContent=translations[currentLang].verifyError; showToast(translations[currentLang].verifyError,'error'); }
-            finally { verifyBtn.disabled=false; }
-        }
-        function activatePremium(txid) {
-            isPremium=true;
-            const encrypted=Security.encrypt({premium:true,txid:txid,date:new Date().toISOString(),fingerprint:Security.getFingerprint()},ENCRYPTION_KEY);
-            localStorage.setItem('studentmail_premium',encrypted);
-            const badge=document.getElementById('premiumBadge'); badge.className='premium-badge active'; badge.innerHTML='<i class="fas fa-check-circle"></i> '+(currentLang==='ar'?'مفعل':'Active');
-            const statusEl=document.getElementById('verifyStatus'); statusEl.className='verify-status success'; statusEl.textContent=translations[currentLang].premiumActivated;
-            updateCustomInputUI();
-            showToast(translations[currentLang].premiumActivated);
-        }
-        function checkPremiumStatus() { const saved=localStorage.getItem('studentmail_premium'); if(saved){ try{ const d=Security.decrypt(saved,ENCRYPTION_KEY); if(d&&d.premium){isPremium=true; const badge=document.getElementById('premiumBadge'); badge.className='premium-badge active'; badge.innerHTML='<i class="fas fa-check-circle"></i> '+(currentLang==='ar'?'مفعل':'Active');} }catch(e){localStorage.removeItem('studentmail_premium');} } }
-
-        // ===== INIT =====
-        async function init() {
-            const savedLang=localStorage.getItem('studentmail_lang');
-            if(savedLang&&savedLang!==currentLang)toggleLanguage();
-            checkPremiumStatus();
-            updateCustomInput
+            const txidInput=document.getElementById('txidInput'); 
+            const statusEl=document.getElementById('verifyStatus'); 
+            const verifyBtn=document.getElementById('verifyBtn');
+            
+            if(!txidInput || !statusEl || !verifyBtn) return;
+            
+            const txid=txidInput.value.
