@@ -3,34 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Student Mail - بريد مؤقت ودائم للطلاب بأعلى معايير الأمان. احصل على بريد @edu مجاني للتسجيل في المواقع والمنصات التعليمية.">
+    <meta name="description" content="Student Mail - بريد مؤقت للطلاب بأعلى معايير الأمان. احصل على بريد مجاني للتسجيل في المواقع والمنصات التعليمية.">
     <meta name="keywords" content="بريد مؤقت, بريد الطلاب, email temporaire, temporary email, student email, edu email, بريد edu, بريد مجاني, بريد مؤقت للطلاب, temp mail, disposable email, fake email, 10 minute mail, guerilla mail">
     <meta name="author" content="CHOUBA">
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
     <meta name="revisit-after" content="7 days">
 
+    <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://studentmail.github.io">
-    <meta property="og:title" content="Student Mail - بريد مؤقت ودائم للطلاب">
-    <meta property="og:description" content="بريد مؤقت ودائم للطلاب بأعلى معايير الأمان. احصل على بريد @edu مجاني الآن!">
+    <meta property="og:title" content="Student Mail - بريد مؤقت للطلاب">
+    <meta property="og:description" content="بريد مؤقت للطلاب بأعلى معايير الأمان. احصل على بريدك المجاني الآن!">
     <meta property="og:image" content="https://studentmail.github.io/images/og-image.png">
     <meta property="og:locale" content="ar_DZ">
     <meta property="og:locale:alternate" content="en_US">
     <meta property="og:site_name" content="Student Mail">
 
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Student Mail - بريد مؤقت ودائم للطلاب">
-    <meta name="twitter:description" content="بريد مؤقت ودائم للطلاب بأعلى معايير الأمان">
+    <meta name="twitter:title" content="Student Mail - بريد مؤقت للطلاب">
+    <meta name="twitter:description" content="بريد مؤقت للطلاب بأعلى معايير الأمان">
     <meta name="twitter:image" content="https://studentmail.github.io/images/og-image.png">
     <meta name="twitter:creator" content="@chouba_dev">
 
+    <!-- Canonical URL -->
     <link rel="canonical" href="https://studentmail.github.io">
 
+    <!-- Alternate Languages -->
     <link rel="alternate" hreflang="ar" href="https://studentmail.github.io/?lang=ar">
     <link rel="alternate" hreflang="en" href="https://studentmail.github.io/?lang=en">
     <link rel="alternate" hreflang="x-default" href="https://studentmail.github.io">
 
+    <!-- Preconnect for Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://api.mail.tm">
@@ -39,10 +44,11 @@
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://apilist.tronscanapi.com">
 
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
 
-    <title>Student Mail - بريد مؤقت ودائم للطلاب | Temporary Email for Students</title>
+    <title>Student Mail - بريد مؤقت للطلاب | Temporary Email for Students</title>
 
     <style>
         :root {
@@ -149,23 +155,31 @@
         .section-header p { font-size: 16px; color: var(--bright-neutral); }
         .inbox-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; }
         .inbox-sidebar { background: var(--midnight-navy); border: 1px solid var(--slate-gray); border-radius: 20px; padding: 24px; box-shadow: rgba(0,0,0,0.4) 0px 25px 80px 0px; height: fit-content; }
+        
+        .custom-input-box { margin-bottom: 20px; }
+        .custom-input-box label { display: block; font-size: 14px; color: var(--bright-neutral); margin-bottom: 8px; font-weight: 400; }
+        .custom-input { width: 100%; background: var(--deep-ocean); border: 2px solid var(--slate-gray); border-radius: 8px; padding: 12px 16px; color: var(--white); font-family: 'Cairo', sans-serif; font-size: 14px; outline: none; transition: all 0.3s ease; direction: ltr; }
+        .custom-input:focus { border-color: var(--cyan-bright); }
+        .custom-input:disabled { background: rgba(255,255,255,0.02); cursor: not-allowed; color: var(--slate-gray); }
+        .custom-input::placeholder { color: rgba(197,208,222,0.5); font-family: 'Cairo', sans-serif; }
+        
         .domain-selector { margin-bottom: 20px; }
         .domain-selector label { display: block; font-size: 14px; color: var(--bright-neutral); margin-bottom: 8px; font-weight: 400; }
         .domain-select { width: 100%; background: var(--deep-ocean); border: 2px solid var(--slate-gray); border-radius: 8px; padding: 12px 16px; color: var(--white); font-family: 'Cairo', sans-serif; font-size: 14px; cursor: pointer; outline: none; transition: all 0.3s ease; }
         .domain-select:focus { border-color: var(--cyan-bright); }
         .domain-select option { background: var(--deep-ocean); color: var(--white); }
-        .domain-badge { display: inline-block; background: rgba(16,185,129,0.15); color: var(--mint-green); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-right: 8px; }
+        
         .inbox-email-box { background: rgba(255,255,255,0.05); border: 2px solid var(--slate-gray); border-radius: 8px; padding: 16px; margin-bottom: 20px; }
         .inbox-email-box:focus-within { border-color: var(--cyan-bright); background: rgba(255,255,255,0.08); }
         .inbox-email-box label { display: block; font-size: 14px; color: var(--bright-neutral); margin-bottom: 8px; font-weight: 400; }
         .email-input-group { display: flex; gap: 8px; align-items: center; }
         .email-input { flex: 1; background: transparent; border: none; color: var(--white); font-size: 14px; font-family: 'Cairo', sans-serif; direction: ltr; outline: none; }
-        .email-input::placeholder { color: rgba(197,208,222,0.6); }
         .inbox-actions { display: flex; flex-direction: column; gap: 12px; }
         .inbox-timer { text-align: center; padding: 16px; background: rgba(16,185,129,0.1); border-radius: 12px; margin-top: 16px; }
         .inbox-timer i { color: var(--mint-green); font-size: 24px; margin-bottom: 8px; }
         .inbox-timer p { font-size: 14px; color: var(--bright-neutral); margin: 0; }
-        .timer-text { color: var(--mint-green); font-weight: 700; }
+        .timer-text { color: var(--mint-green); font-weight: 700; font-size: 18px; direction: ltr; }
+        
         .inbox-main { background: var(--midnight-navy); border: 1px solid var(--slate-gray); border-radius: 20px; padding: 24px; box-shadow: rgba(0,0,0,0.4) 0px 25px 80px 0px; min-height: 500px; }
         .inbox-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--slate-gray); }
         .inbox-title { font-size: 19.2px; font-weight: 700; }
@@ -315,16 +329,19 @@
     </style>
 </head>
 <body>
+    <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="spinner"></div>
         <p id="loadingText">جاري التحميل...</p>
     </div>
 
+    <!-- Toast -->
     <div class="toast" id="toast">
         <i class="fas fa-check-circle"></i>
         <span id="toastMessage">تم النسخ!</span>
     </div>
 
+    <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="#" class="logo">
@@ -345,6 +362,7 @@
         </div>
     </nav>
 
+    <!-- Hero -->
     <section class="hero" id="hero">
         <div class="container">
             <div class="hero-grid">
@@ -352,8 +370,8 @@
                     <h1 data-ar="بريد <span class=\"highlight\">مؤقت ودائم</span> للطلاب" data-en="<span class=\"highlight\">Temporary & Permanent</span> Mail for Students">
                         بريد <span class="highlight">مؤقت ودائم</span> للطلاب
                     </h1>
-                    <p data-ar="احصل على بريد إلكتروني مؤقت للتسجيل في المواقع والمنصات بأمان، أو بريد دائم مخصص للطلاب بمزايا احترافية." data-en="Get a temporary email to register on websites and platforms safely, or a permanent email dedicated to students with professional features.">
-                        احصل على بريد إلكتروني مؤقت للتسجيل في المواقع والمنصات بأمان، أو بريد دائم مخصص للطلاب بمزايا احترافية.
+                    <p data-ar="احصل على بريد إلكتروني مؤقت للتسجيل في المواقع والمنصات بأمان، أو بريد مدفوع مخصص للطلاب بمزايا احترافية." data-en="Get a temporary email to register on websites and platforms safely, or a premium email dedicated to students with professional features.">
+                        احصل على بريد إلكتروني مؤقت للتسجيل في المواقع والمنصات بأمان، أو بريد مدفوع مخصص للطلاب بمزايا احترافية.
                     </p>
                     <div class="hero-stats">
                         <div class="stat-item">
@@ -372,7 +390,7 @@
                     <div class="hero-actions">
                         <button class="btn-primary" onclick="createTempEmail()">
                             <i class="fas fa-plus"></i>
-                            <span data-ar="إنشاء بريد مؤقت" data-en="Create Temp Email">إنشاء بريد مؤقت</span>
+                            <span data-ar="إنشاء بريد مجاني" data-en="Create Free Email">إنشاء بريد مجاني</span>
                         </button>
                         <a href="#pricing" class="btn-secondary">
                             <i class="fas fa-crown"></i>
@@ -411,14 +429,22 @@
         </div>
     </section>
 
+    <!-- Inbox -->
     <section class="inbox-section" id="inbox">
         <div class="container">
             <div class="section-header">
                 <h2 data-ar="صندوق البريد" data-en="Inbox">صندوق البريد</h2>
-                <p data-ar="إدارة بريدك المؤقت وقراءة الرسائل الواردة" data-en="Manage your temporary email and read incoming messages">إدارة بريدك المؤقت وقراءة الرسائل الواردة</p>
+                <p data-ar="إدارة بريدك وقراءة الرسائل الواردة" data-en="Manage your email and read incoming messages">إدارة بريدك وقراءة الرسائل الواردة</p>
             </div>
             <div class="inbox-grid">
                 <div class="inbox-sidebar">
+                    
+                    <!-- حقل مخصص لاسم المستخدم (يفتح بعد الدفع) -->
+                    <div class="custom-input-box">
+                        <label data-ar="تخصيص اسم البريد" data-en="Custom Email Name">تخصيص اسم البريد</label>
+                        <input type="text" id="customUsername" class="custom-input" placeholder="🔒 للمشتركين فقط" autocomplete="off" disabled>
+                    </div>
+                    
                     <div class="domain-selector">
                         <label data-ar="اختر النطاق" data-en="Select Domain">اختر النطاق</label>
                         <select class="domain-select" id="domainSelect" onchange="onDomainChange()">
@@ -429,8 +455,9 @@
                             <span data-ar="جاري تحديث النطاقات..." data-en="Updating domains...">جاري تحديث النطاقات...</span>
                         </div>
                     </div>
+                    
                     <div class="inbox-email-box">
-                        <label data-ar="عنوان البريد" data-en="Email Address">عنوان البريد</label>
+                        <label data-ar="عنوان البريد الحالي" data-en="Current Email Address">عنوان البريد الحالي</label>
                         <div class="email-input-group">
                             <input type="text" class="email-input" id="inboxEmail" readonly value="" aria-label="Email address">
                             <button class="btn-icon" onclick="copyInboxEmail()" title="Copy" aria-label="Copy email">
@@ -441,11 +468,11 @@
                     <div class="inbox-actions">
                         <button class="btn-primary btn-full" onclick="createNewEmail()">
                             <i class="fas fa-plus"></i>
-                            <span data-ar="بريد جديد" data-en="New Email">بريد جديد</span>
+                            <span data-ar="توليد بريد جديد" data-en="Generate New Email">توليد بريد جديد</span>
                         </button>
                         <button class="btn-refresh" id="refreshBtn" onclick="refreshInbox()">
                             <i class="fas fa-sync-alt"></i>
-                            <span data-ar="تحديث" data-en="Refresh">تحديث</span>
+                            <span data-ar="تحديث الصندوق" data-en="Refresh Inbox">تحديث الصندوق</span>
                         </button>
                     </div>
                     <div class="inbox-timer">
@@ -471,49 +498,46 @@
         </div>
     </section>
 
+    <!-- Services -->
     <section class="services-section" id="services">
         <div class="container">
             <div class="section-header">
                 <h2 data-ar="خدماتنا" data-en="Our Services">خدماتنا</h2>
-                <p data-ar="حلول بريدية متكاملة مصممة خصيصاً لاحتياجات الطلاب" data-en="Comprehensive email solutions designed specifically for students' needs">حلول بريدية متكاملة مصممة خصيصاً لاحتياجات الطلاب</p>
+                <p data-ar="حلول بريدية عملية مصممة خصيصاً لاحتياجات الطلاب" data-en="Practical email solutions designed specifically for students' needs">حلول بريدية عملية مصممة خصيصاً لاحتياجات الطلاب</p>
             </div>
             <div class="services-grid">
                 <div class="service-card">
                     <div class="service-icon"><i class="fas fa-clock"></i></div>
-                    <h3 data-ar="بريد مؤقت" data-en="Temporary Email">بريد مؤقت</h3>
-                    <p data-ar="أنشئ بريداً إلكترونياً مؤقتاً للتسجيل في المواقع والمنصات دون الكشف عن بريدك الشخصي." data-en="Create a temporary email to register on websites and platforms without revealing your personal email.">أنشئ بريداً إلكترونياً مؤقتاً للتسجيل في المواقع والمنصات دون الكشف عن بريدك الشخصي.</p>
+                    <h3 data-ar="بريد عشوائي مجاني" data-en="Free Random Email">بريد عشوائي مجاني</h3>
+                    <p data-ar="أنشئ بريداً إلكترونياً عشوائياً للتسجيل في المواقع والمنصات دون الكشف عن بريدك الشخصي." data-en="Create a random email to register on websites and platforms without revealing your personal email.">أنشئ بريداً إلكترونياً عشوائياً للتسجيل في المواقع والمنصات دون الكشف عن بريدك الشخصي.</p>
                     <ul class="service-features">
-                        <li><i class="fas fa-check"></i> <span data-ar="توليد فوري" data-en="Instant generation">توليد فوري</span></li>
-                        <li><i class="fas fa-check"></i> <span data-ar="بدون تسجيل" data-en="No registration">بدون تسجيل</span></li>
-                        <li><i class="fas fa-check"></i> <span data-ar="حماية الخصوصية" data-en="Privacy protection">حماية الخصوصية</span></li>
-                        <li><i class="fas fa-check"></i> <span data-ar="استلام رسائل فوري" data-en="Instant message reception">استلام رسائل فوري</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="توليد فوري ومجاني" data-en="Instant & free generation">توليد فوري ومجاني</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="صالح لمدة ساعة" data-en="Valid for 1 hour">صالح لمدة ساعة</span></li>
                     </ul>
                 </div>
                 <div class="service-card">
                     <div class="service-icon"><i class="fas fa-graduation-cap"></i></div>
-                    <h3 data-ar="بريد دائم للطلاب" data-en="Permanent Student Email">بريد دائم للطلاب</h3>
-                    <p data-ar="بريد إلكتروني دائم مخصص للطلاب باسم نطاق احترافي. استخدمه للتواصل الأكاديمي." data-en="A permanent email dedicated to students with a professional domain name. Use it for academic communication.">بريد إلكتروني دائم مخصص للطلاب باسم نطاق احترافي. استخدمه للتواصل الأكاديمي.</p>
+                    <h3 data-ar="نطاقات مميزة للطلاب" data-en="Premium Student Domains">نطاقات مميزة للطلاب</h3>
+                    <p data-ar="نوفر مجموعة من النطاقات التي تقبلها المنصات التعليمية العالمية لتسهيل تسجيلك الأكاديمي." data-en="We provide a set of domains accepted by global educational platforms to ease your academic registration.">نوفر مجموعة من النطاقات التي تقبلها المنصات التعليمية العالمية لتسهيل تسجيلك الأكاديمي.</p>
                     <ul class="service-features">
-                        <li><i class="fas fa-check"></i> <span data-ar="عنوان دائم" data-en="Permanent address">عنوان دائم</span></li>
-                        <li><i class="fas fa-check"></i> <span data-ar="دعم فني" data-en="Technical support">دعم فني</span></li>
-                        <li><i class="fas fa-check"></i> <span data-ar="تكامل مع Google" data-en="Google integration">تكامل مع Google</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="نطاقات موثوقة" data-en="Trusted domains">نطاقات موثوقة</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="تخطي حظر التسجيل" data-en="Bypass registration blocks">تخطي حظر التسجيل</span></li>
                     </ul>
                 </div>
                 <div class="service-card">
                     <div class="service-icon"><i class="fas fa-crown"></i></div>
-                    <h3 data-ar="بريد مدفوع" data-en="Premium Email">بريد مدفوع</h3>
-                    <p data-ar="بريد إلكتروني مدفوع بمزايا إضافية: تخزين كبير، أمان متقدم، دعم 24/7." data-en="Premium email with additional features: large storage, advanced security, 24/7 support.">بريد إلكتروني مدفوع بمزايا إضافية: تخزين كبير، أمان متقدم، دعم 24/7.</p>
+                    <h3 data-ar="بريد مخصص (مدفوع)" data-en="Custom Email (Premium)">بريد مخصص (مدفوع)</h3>
+                    <p data-ar="هل تريد بريداً باسمك ويستمر لفترة أطول؟ تتيح لك الباقة المدفوعة تخصيص الاسم والاحتفاظ به لشهر." data-en="Want an email with your name that lasts longer? The premium plan allows you to customize the name and keep it for a month.">هل تريد بريداً باسمك ويستمر لفترة أطول؟ تتيح لك الباقة المدفوعة تخصيص الاسم والاحتفاظ به لشهر.</p>
                     <ul class="service-features">
-                        <li><i class="fas fa-check"></i> <span data-ar="تخزين 50GB" data-en="50GB storage">تخزين 50GB</span></li>
-                        <li><i class="fas fa-check"></i> <span data-ar="أمان SSL/TLS" data-en="SSL/TLS security">أمان SSL/TLS</span></li>
-                        <li><i class="fas fa-check"></i> <span data-ar="دعم على مدار الساعة" data-en="24/7 support">دعم على مدار الساعة</span></li>
-                        <li><i class="fas fa-check"></i> <span data-ar="عناوين متعددة" data-en="Multiple addresses">عناوين متعددة</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="تخصيص اسم الإيميل" data-en="Customize email name">تخصيص اسم الإيميل</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="صلاحية 30 يوماً" data-en="30-day validity">صلاحية 30 يوماً</span></li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Pricing -->
     <section class="pricing-section" id="pricing">
         <div class="container">
             <div class="section-header">
@@ -523,33 +547,33 @@
             <div class="pricing-grid">
                 <div class="pricing-card">
                     <div class="pricing-icon"><i class="fas fa-envelope-open"></i></div>
-                    <h3 data-ar="البريد المؤقت" data-en="Temporary Mail">البريد المؤقت</h3>
+                    <h3 data-ar="البريد العشوائي" data-en="Random Mail">البريد العشوائي</h3>
                     <div class="price" data-ar="مجاني" data-en="Free">مجاني</div>
                     <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> <span data-ar="بريد مؤقت لمدة ساعة" data-en="1-hour temporary email">بريد مؤقت لمدة ساعة</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="توليد اسم إيميل عشوائي" data-en="Generate random email name">توليد اسم إيميل عشوائي</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="صالح لمدة ساعة واحدة" data-en="Valid for 1 hour">صالح لمدة ساعة واحدة</span></li>
                         <li><i class="fas fa-check"></i> <span data-ar="استلام رسائل فوري" data-en="Instant message reception">استلام رسائل فوري</span></li>
-                        <li><i class="fas fa-check"></i> <span data-ar="بدون تسجيل" data-en="No registration">بدون تسجيل</span></li>
-                        <li><i class="fas fa-times"></i> <span data-ar="بدون دعم فني" data-en="No technical support">بدون دعم فني</span></li>
-                        <li><i class="fas fa-times"></i> <span data-ar="بدون تخزين دائم" data-en="No permanent storage">بدون تخزين دائم</span></li>
+                        <li><i class="fas fa-times"></i> <span data-ar="لا يمكن تخصيص الاسم" data-en="Cannot customize name">لا يمكن تخصيص الاسم</span></li>
+                        <li><i class="fas fa-times"></i> <span data-ar="لا يدعم الاحتفاظ المطول" data-en="No extended retention">لا يدعم الاحتفاظ المطول</span></li>
                     </ul>
                     <button class="btn-primary btn-full" onclick="createTempEmail()">
-                        <span data-ar="ابدأ الآن" data-en="Start Now">ابدأ الآن</span>
+                        <span data-ar="ابدأ الآن مجاناً" data-en="Start Now for Free">ابدأ الآن مجاناً</span>
                     </button>
                 </div>
-                <div class="pricing-card featured" data-label="موصى به">
+                <div class="pricing-card featured" data-label="الأكثر طلباً">
                     <div class="premium-badge" id="premiumBadge">
                         <i class="fas fa-lock"></i>
                         <span data-ar="غير مفعل" data-en="Inactive">غير مفعل</span>
                     </div>
                     <div class="pricing-icon"><i class="fas fa-crown"></i></div>
-                    <h3 data-ar="البريد المدفوع" data-en="Premium Mail">البريد المدفوع</h3>
-                    <div class="price">$5 <span data-ar="/ شهر" data-en="/ month">/ شهر</span></div>
+                    <h3 data-ar="البريد المخصص" data-en="Custom Mail">البريد المخصص</h3>
+                    <div class="price">$2 <span data-ar="/ شهر" data-en="/ month">/ شهر</span></div>
                     <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> <span data-ar="بريد دائم مدى الحياة" data-en="Lifetime permanent email">بريد دائم مدى الحياة</span></li>
-                        <li><i class="fas fa-check"></i> <span data-ar="تخزين 50GB" data-en="50GB storage">تخزين 50GB</span></li>
-                        <li><i class="fas fa-check"></i> <span data-ar="أمان متقدم" data-en="Advanced security">أمان متقدم</span></li>
-                        <li><i class="fas fa-check"></i> <span data-ar="دعم فني 24/7" data-en="24/7 technical support">دعم فني 24/7</span></li>
-                        <li><i class="fas fa-check"></i> <span data-ar="عناوين بريدية متعددة" data-en="Multiple email addresses">عناوين بريدية متعددة</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="اختيار اسم مخصص للإيميل" data-en="Choose a custom email name">اختيار اسم مخصص للإيميل</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="حفظ الجلسة لمدة 30 يوماً" data-en="Save session for 30 days">حفظ الجلسة لمدة 30 يوماً</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="استقبال غير محدود" data-en="Unlimited reception">استقبال غير محدود</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="تخطي سريع للحظر" data-en="Fast block bypass">تخطي سريع للحظر</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="خصوصية وأمان تام" data-en="Total privacy & security">خصوصية وأمان تام</span></li>
                     </ul>
                     <button class="btn-primary btn-full" onclick="scrollToWallet()">
                         <span data-ar="اشترك الآن" data-en="Subscribe Now">اشترك الآن</span>
@@ -559,18 +583,19 @@
         </div>
     </section>
 
+    <!-- Wallet -->
     <section class="wallet-section" id="wallet">
         <div class="container">
             <div class="wallet-box">
                 <h3 data-ar="الدفع عبر Binance" data-en="Payment via Binance">الدفع عبر Binance</h3>
-                <p data-ar="يمكنك الاشتراك في البريد المدفوع عبر تحويل USDT على شبكة TRC20" data-en="You can subscribe to premium mail by transferring USDT on TRC20 network">يمكنك الاشتراك في البريد المدفوع عبر تحويل USDT على شبكة TRC20</p>
+                <p data-ar="يمكنك تفعيل خطة البريد المخصص عبر تحويل USDT على شبكة TRC20" data-en="You can activate the custom mail plan by transferring USDT on TRC20 network">يمكنك تفعيل خطة البريد المخصص عبر تحويل USDT على شبكة TRC20</p>
                 <div class="wallet-address">
                     <input type="text" id="walletInput" value="TTrYhS7Y8t1bqJEPST2DaGrAH3oKUni6YN" readonly aria-label="Wallet address">
                     <button class="btn-icon" onclick="copyWallet()" title="Copy" aria-label="Copy wallet address">
                         <i class="fas fa-copy"></i>
                     </button>
                 </div>
-                <p class="wallet-label">USDT TRC20 - Binance | المبلغ المطلوب: <strong>$5.00</strong></p>
+                <p class="wallet-label">USDT TRC20 - Binance | المبلغ المطلوب: <strong>$2.00</strong></p>
                 <div class="payment-verify" id="paymentVerify">
                     <h4 data-ar="تفعيل الاشتراك تلقائياً" data-en="Auto-Activate Subscription">تفعيل الاشتراك تلقائياً</h4>
                     <p data-ar="بعد إتمام التحويل، أدخل معرف المعاملة (TXID) هنا للتحقق والتفعيل الفوري" data-en="After completing the transfer, enter the Transaction ID (TXID) here for instant verification and activation">بعد إتمام التحويل، أدخل معرف المعاملة (TXID) هنا للتحقق والتفعيل الفوري</p>
@@ -585,6 +610,7 @@
         </div>
     </section>
 
+    <!-- Contact -->
     <section class="contact-section" id="contact">
         <div class="container">
             <div class="section-header">
@@ -610,6 +636,7 @@
         </div>
     </section>
 
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -631,6 +658,7 @@
         </div>
     </footer>
 
+    <!-- Message Modal -->
     <div class="modal-overlay" id="messageModal" role="dialog" aria-modal="true" aria-labelledby="modalSubject">
         <div class="modal-content">
             <div class="modal-header">
@@ -653,7 +681,7 @@
         // ===== CONFIG =====
         const CONFIG = {
             WALLET_ADDRESS: 'TTrYhS7Y8t1bqJEPST2DaGrAH3oKUni6YN',
-            PREMIUM_PRICE: 5,
+            PREMIUM_PRICE: 2, // تم تغيير السعر إلى 2 دولار
             USDT_CONTRACT: 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
             TRONSCAN_API: 'https://apilist.tronscanapi.com',
             TRONGRID_API: 'https://api.trongrid.io',
@@ -697,8 +725,8 @@
 
         // ===== TRANSLATIONS =====
         const translations = {
-            ar: { copied:'تم النسخ!', emailCreated:'تم إنشاء البريد بنجاح!', refreshSuccess:'تم تحديث الرسائل', error:'حدث خطأ، حاول مرة أخرى', timerExpired:'انتهت صلاحية البريد', domainLoaded:'تم تحميل النطاقات', domainError:'فشل تحميل النطاقات', premiumActivated:'تم تفعيل الباقة المدفوعة! 🎉', premiumAlready:'الباقة مفعلة بالفعل', invalidTxid:'TXID غير صالح', verifyError:'فشل التحقق', enterTxid:'أدخل TXID أولاً', selectDomain:'اختر نطاقاً أولاً', rateLimit:'محاولات كثيرة، انتظر' },
-            en: { copied:'Copied!', emailCreated:'Email created successfully!', refreshSuccess:'Messages refreshed', error:'An error occurred', timerExpired:'Email expired', domainLoaded:'Domains loaded', domainError:'Failed to load domains', premiumActivated:'Premium activated! 🎉', premiumAlready:'Already active', invalidTxid:'Invalid TXID', verifyError:'Verification failed', enterTxid:'Enter TXID first', selectDomain:'Select a domain first', rateLimit:'Too many attempts, wait' }
+            ar: { copied:'تم النسخ!', emailCreated:'تم إنشاء البريد بنجاح!', refreshSuccess:'تم تحديث الرسائل', error:'حدث خطأ، حاول مرة أخرى', timerExpired:'انتهت صلاحية البريد', domainLoaded:'تم تحميل النطاقات', domainError:'فشل تحميل النطاقات', premiumActivated:'تم تفعيل الباقة المدفوعة! 🎉', premiumAlready:'الباقة مفعلة بالفعل', invalidTxid:'TXID غير صالح', verifyError:'فشل التحقق', enterTxid:'أدخل TXID أولاً', selectDomain:'اختر نطاقاً أولاً', rateLimit:'محاولات كثيرة، انتظر', usernameTaken:'هذا الاسم محجوز، اختر اسماً آخر', lockedInput:'🔒 للمشتركين فقط', placeholderInput:'مثال: ali2026', daysLeft:'يوم' },
+            en: { copied:'Copied!', emailCreated:'Email created successfully!', refreshSuccess:'Messages refreshed', error:'An error occurred', timerExpired:'Email expired', domainLoaded:'Domains loaded', domainError:'Failed to load domains', premiumActivated:'Premium activated! 🎉', premiumAlready:'Already active', invalidTxid:'Invalid TXID', verifyError:'Verification failed', enterTxid:'Enter TXID first', selectDomain:'Select a domain first', rateLimit:'Too many attempts, wait', usernameTaken:'Username taken, choose another', lockedInput:'🔒 Premium Only', placeholderInput:'e.g. ali2026', daysLeft:'Days' }
         };
 
         // ===== UI FUNCTIONS =====
@@ -716,7 +744,29 @@
         function copyEmail() { if(currentEmail)copyToClipboard(currentEmail); }
         function copyInboxEmail() { if(currentEmail)copyToClipboard(currentEmail); }
         function copyWallet() { copyToClipboard(CONFIG.WALLET_ADDRESS); }
-        function toggleLanguage() { currentLang=currentLang==='ar'?'en':'ar'; document.documentElement.lang=currentLang; document.documentElement.dir=currentLang==='ar'?'rtl':'ltr'; document.getElementById('langBtn').textContent=currentLang==='ar'?'EN':'AR'; document.querySelectorAll('[data-ar][data-en]').forEach(el=>{if(el.tagName!=='INPUT'||!el.hasAttribute('value'))el.innerHTML=el.getAttribute('data-'+currentLang);}); localStorage.setItem('studentmail_lang',currentLang); }
+        
+        function updateCustomInputUI() {
+            const input = document.getElementById('customUsername');
+            if(isPremium) {
+                input.disabled = false;
+                input.placeholder = translations[currentLang].placeholderInput;
+            } else {
+                input.disabled = true;
+                input.value = '';
+                input.placeholder = translations[currentLang].lockedInput;
+            }
+        }
+        
+        function toggleLanguage() { 
+            currentLang=currentLang==='ar'?'en':'ar'; 
+            document.documentElement.lang=currentLang; 
+            document.documentElement.dir=currentLang==='ar'?'rtl':'ltr'; 
+            document.getElementById('langBtn').textContent=currentLang==='ar'?'EN':'AR'; 
+            document.querySelectorAll('[data-ar][data-en]').forEach(el=>{if(el.tagName!=='INPUT'||!el.hasAttribute('value'))el.innerHTML=el.getAttribute('data-'+currentLang);}); 
+            localStorage.setItem('studentmail_lang',currentLang); 
+            updateCustomInputUI();
+        }
+        
         function scrollToWallet() { document.getElementById('wallet').scrollIntoView({behavior:'smooth'}); }
         function toggleMobileMenu() { document.getElementById('navLinks').classList.toggle('active'); }
         function closeModal() { document.getElementById('messageModal').classList.remove('active'); }
@@ -802,15 +852,22 @@
         async function secmailGetMessage(login,domain,id) { const res=await fetch(CONFIG.PROVIDERS.secmail.base+'?action=readMessage&login='+encodeURIComponent(login)+'&domain='+encodeURIComponent(domain)+'&id='+id); if(!res.ok)throw new Error('Failed'); return await res.json(); }
 
         async function createTempEmail() {
-            showLoading(true, currentLang==='ar'?'جاري إنشاء بريدك المؤقت...':'Creating your temporary email...');
+            showLoading(true, currentLang==='ar'?'جاري إنشاء بريدك...':'Creating your email...');
             try {
                 const select=document.getElementById('domainSelect');
                 if(!domains.length||select.options.length<=1)await loadDomains();
                 currentDomain=select.value||domains[0];
                 if(!currentDomain){showToast(translations[currentLang].selectDomain,'warning'); showLoading(false); return;}
+                
                 emailProvider=domainProviderMap[currentDomain]||'mailtm';
-                emailUsername='student'+generateRandomString(6);
-                const address=emailUsername+'@'+currentDomain;
+                
+                let requestedName = '';
+                if (isPremium) {
+                    requestedName = document.getElementById('customUsername').value.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+                }
+                
+                emailUsername = requestedName ? requestedName : 'student' + generateRandomString(6);
+                const address = emailUsername + '@' + currentDomain;
                 
                 if(emailProvider==='secmail'){
                     emailToken=null; emailPassword=null;
@@ -824,12 +881,21 @@
                 } else {
                     const base=CONFIG.PROVIDERS[emailProvider].base;
                     const password=generateRandomString(16);
-                    await createAccount(base,address,password);
+                    try {
+                        await createAccount(base, address, password);
+                    } catch (err) {
+                        showToast(translations[currentLang].usernameTaken, 'error');
+                        showLoading(false);
+                        return;
+                    }
                     emailToken=await getToken(base,address,password);
                     emailPassword=password;
                 }
                 
-                currentEmail=address; timeLeft=3600;
+                currentEmail=address; 
+                // ضبط الوقت: المدفوع 30 يوم ، المجاني ساعة واحدة
+                timeLeft = isPremium ? 2592000 : 3600; 
+                
                 const encrypted=Security.encrypt({email:currentEmail,username:emailUsername,domain:currentDomain,provider:emailProvider,token:emailToken,password:emailPassword,time:Date.now()},ENCRYPTION_KEY);
                 localStorage.setItem('studentmail_session',encrypted);
                 document.getElementById('heroEmail').textContent=currentEmail;
@@ -903,7 +969,28 @@
         }
         
         function startPolling() { clearInterval(pollInterval); pollInterval=setInterval(()=>{if(currentEmail)refreshInbox();},15000); }
-        function startTimer() { clearInterval(timerInterval); timerInterval=setInterval(()=>{timeLeft--; if(timeLeft<=0){clearInterval(timerInterval); clearInterval(pollInterval); document.getElementById('timer').textContent='00:00'; showToast(translations[currentLang].timerExpired,'warning'); return;} const mins=Math.floor(timeLeft/60).toString().padStart(2,'0'); const secs=(timeLeft%60).toString().padStart(2,'0'); document.getElementById('timer').textContent=mins+':'+secs;},1000); }
+        function startTimer() { 
+            clearInterval(timerInterval); 
+            timerInterval=setInterval(()=>{
+                timeLeft--; 
+                if(timeLeft<=0){
+                    clearInterval(timerInterval); 
+                    clearInterval(pollInterval); 
+                    document.getElementById('timer').textContent='00:00'; 
+                    showToast(translations[currentLang].timerExpired,'warning'); 
+                    return;
+                } 
+                
+                if (isPremium) {
+                    const days = Math.floor(timeLeft / 86400);
+                    document.getElementById('timer').textContent = days + " " + translations[currentLang].daysLeft;
+                } else {
+                    const mins=Math.floor(timeLeft/60).toString().padStart(2,'0'); 
+                    const secs=(timeLeft%60).toString().padStart(2,'0'); 
+                    document.getElementById('timer').textContent=mins+':'+secs;
+                }
+            }, 1000); 
+        }
 
         // ===== PAYMENT =====
         async function verifyPayment() {
@@ -928,6 +1015,7 @@
             localStorage.setItem('studentmail_premium',encrypted);
             const badge=document.getElementById('premiumBadge'); badge.className='premium-badge active'; badge.innerHTML='<i class="fas fa-check-circle"></i> '+(currentLang==='ar'?'مفعل':'Active');
             const statusEl=document.getElementById('verifyStatus'); statusEl.className='verify-status success'; statusEl.textContent=translations[currentLang].premiumActivated;
+            updateCustomInputUI();
             showToast(translations[currentLang].premiumActivated);
         }
         function checkPremiumStatus() { const saved=localStorage.getItem('studentmail_premium'); if(saved){ try{ const d=Security.decrypt(saved,ENCRYPTION_KEY); if(d&&d.premium){isPremium=true; const badge=document.getElementById('premiumBadge'); badge.className='premium-badge active'; badge.innerHTML='<i class="fas fa-check-circle"></i> '+(currentLang==='ar'?'مفعل':'Active');} }catch(e){localStorage.removeItem('studentmail_premium');} } }
@@ -937,9 +1025,24 @@
             const savedLang=localStorage.getItem('studentmail_lang');
             if(savedLang&&savedLang!==currentLang)toggleLanguage();
             checkPremiumStatus();
+            updateCustomInputUI();
             await loadDomains();
             const savedSession=localStorage.getItem('studentmail_session');
-            if(savedSession){ try{ const d=Security.decrypt(savedSession,ENCRYPTION_KEY); if(d&&d.email&&d.time){ const elapsed=Math.floor((Date.now()-d.time)/1000); if(elapsed<3600){ currentEmail=d.email; emailUsername=d.username; currentDomain=d.domain; emailProvider=d.provider||'mailtm'; emailToken=d.token; emailPassword=d.password; timeLeft=3600-elapsed; const select=document.getElementById('domainSelect'); if(domains.includes(currentDomain))select.value=currentDomain; document.getElementById('heroEmail').textContent=currentEmail; document.getElementById('inboxEmail').value=currentEmail; document.getElementById('inbox').classList.add('active'); startPolling(); startTimer(); await refreshInbox(); } else { localStorage.removeItem('studentmail_session'); } } }catch(e){localStorage.removeItem('studentmail_session');} }
+            if(savedSession){ 
+                try{ 
+                    const d=Security.decrypt(savedSession,ENCRYPTION_KEY); 
+                    if(d&&d.email&&d.time){ 
+                        const elapsed=Math.floor((Date.now()-d.time)/1000); 
+                        const maxTime = isPremium ? 2592000 : 3600;
+                        if(elapsed < maxTime){ 
+                            currentEmail=d.email; emailUsername=d.username; currentDomain=d.domain; emailProvider=d.provider||'mailtm'; emailToken=d.token; emailPassword=d.password; timeLeft=maxTime-elapsed; 
+                            const select=document.getElementById('domainSelect'); if(domains.includes(currentDomain))select.value=currentDomain; 
+                            document.getElementById('heroEmail').textContent=currentEmail; document.getElementById('inboxEmail').value=currentEmail; document.getElementById('inbox').classList.add('active'); 
+                            startPolling(); startTimer(); await refreshInbox(); 
+                        } else { localStorage.removeItem('studentmail_session'); } 
+                    } 
+                }catch(e){localStorage.removeItem('studentmail_session');} 
+            }
             window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
         }
 
