@@ -40,6 +40,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://api.mail.tm">
     <link rel="dns-prefetch" href="https://api.mail.gw">
+    <link rel="dns-prefetch" href="https://api.guerrillamail.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://apilist.tronscanapi.com">
 
@@ -686,6 +687,7 @@
             PROVIDERS: {
                 mailtm:    { kind: 'mailtm',    base: 'https://api.mail.tm' },
                 mailgw:    { kind: 'mailtm',    base: 'https://api.mail.gw' },
+                guerrilla: { kind: 'guerrilla', base: 'https://api.guerrillamail.com/ajax.php' },
                 secmail:   { kind: '1secmail',  base: 'https://www.1secmail.com/api/v1/' }
             }
         };
@@ -864,6 +866,10 @@
                     }
                     return [];
                 }
+                if (p.kind === 'guerrilla') {
+                    // تم إرجاع كافة النطاقات المفقودة السابقة بالكامل كما طلبت
+                    return ['guerrillamail.com', 'sharklasers.com', 'grr.la', 'spam4.me', 'guerrillamail.info', 'guerrillamail.biz', 'guerrillamail.de', 'guerrillamail.net', 'guerrillamail.org', 'e4ward.com', 'pocztok.pl'];
+                }
                 if (p.kind === '1secmail') {
                     const res = await fetch(p.base + '?action=getDomainList');
                     if (!res.ok) return [];
@@ -886,7 +892,6 @@
             try {
                 const keys=Object.keys(CONFIG.PROVIDERS);
                 
-                // Using Promise.all with catch fallback (Compatible with all mobile browsers)
                 const promises = keys.map(function(k) {
                     return fetchProviderDomains(k).catch(function() { return []; });
                 });
@@ -903,15 +908,6 @@
                                 domainProviderMap[d] = keys[i];
                             }
                         }
-                    }
-                }
-                
-                const backup1SecDomains = ['1secmail.com', '1secmail.org', '1secmail.net', 'kzizi.com', 'xojxe.com', 'yoggm.com'];
-                for(let i=0; i<backup1SecDomains.length; i++) {
-                    const d = backup1SecDomains[i];
-                    if(!domainProviderMap[d]) {
-                        domains.push(d);
-                        domainProviderMap[d] = 'secmail';
                     }
                 }
 
@@ -947,12 +943,12 @@
                         domains=JSON.parse(cachedD); 
                         domainProviderMap=JSON.parse(cachedM); 
                     } catch(err) {
-                        domains=['1secmail.com','1secmail.org']; 
-                        domains.forEach(function(d){ domainProviderMap[d]='secmail'; });
+                        domains=['sharklasers.com','grr.la','guerrillamail.com']; 
+                        domains.forEach(function(d){ domainProviderMap[d]='guerrilla'; });
                     }
                 } else { 
-                    domains=['1secmail.com','1secmail.org']; 
-                    domains.forEach(function(d){ domainProviderMap[d]='secmail'; });
+                    domains=['sharklasers.com','grr.la','guerrillamail.com']; 
+                    domains.forEach(function(d){ domainProviderMap[d]='guerrilla'; });
                 }
                 
                 if(select) {
@@ -1033,7 +1029,6 @@
             return await res.json(); 
         }
 
-        // حفظ كاش الرسائل محلياً لضمان عدم اختفائها
         function saveMessagesToCache(msgs) {
             try { localStorage.setItem('studentmail_msgs_cache', JSON.stringify(msgs)); } catch(e){}
         }
@@ -1072,6 +1067,13 @@
                 
                 if(emailProvider === 'secmail'){
                     emailToken=null; emailPassword=null;
+                } else if (emailProvider === 'guerrilla') {
+                    const res = await fetch(CONFIG.PROVIDERS[emailProvider].base + '?f=get_email_address');
+                    if(!res.ok) throw new Error('Guerrilla API Failed');
+                    const data = await res.json();
+                    emailToken = data.sid_token;
+                    emailPassword = null;
+                    await fetch(CONFIG.PROVIDERS[emailProvider].base + '?f=set_email_user&email_user=' + emailUsername + '&lang=en&sid_token=' + emailToken);
                 } else {
                     const base = CONFIG.PROVIDERS[emailProvider].base;
                     const password = generateRandomString(16);
@@ -1151,12 +1153,29 @@
                             return {id:m.id, from:{address:m.from}, subject:m.subject, createdAt:m.date, seen:false};
                         });
                     }
+                } else if (emailProvider==='guerrilla') {
+                    const res = await fetch(CONFIG.PROVIDERS[emailProvider].base + '?f=get_email_list&offset=0&sid_token=' + emailToken);
+                    if(!res.ok) throw new Error('Failed');
+                    const data = await res.json();
+                    if(data && data.list) {
+                        for(let i=0; i<data.list.length; i++) {
+                            const m = data.list[i];
+                            if(m.mail_id !== '1') {
+                                fetchedMessages.push({
+                                    id: m.mail_id,
+                                    from: { address: m.mail_from },
+                                    subject: m.mail_subject,
+                                    createdAt: m.mail_timestamp ? m.mail_timestamp * 1000 : Date.now(),
+                                    seen: m.mail_read === '1'
+                                });
+                            }
+                        }
+                    }
                 } else {
                     const base=CONFIG.PROVIDERS[emailProvider].base;
                     fetchedMessages=await getMessages(base,emailToken);
                 }
 
-                // دمج الرسائل الجديدة مع القديمة المحفوظة في الكاش لضمان عدم اختفائها
                 const cachedMessages = getMessagesFromCache();
                 const allMessagesMap = {};
                 
@@ -1174,7 +1193,6 @@
                     }
                 }
 
-                // ترتيب الرسائل (الأحدث أولاً)
                 newCombinedMessages.sort(function(a, b) {
                     const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
                     const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
@@ -1190,7 +1208,6 @@
                 renderMessages();
                 
             }catch(e){
-                // في حالة فشل جلب الرسائل، اعرض الرسائل من الكاش على الأقل
                 if(messages.length === 0) {
                     messages = getMessagesFromCache();
                     renderMessages();
@@ -1239,6 +1256,17 @@
                     let fAddr = 'Unknown';
                     if(raw.from) fAddr = raw.from;
                     fullMsg={ subject:raw.subject, from:{address:fAddr}, createdAt:raw.date, text:raw.textBody||raw.body||'', html:raw.htmlBody||'' };
+                } else if (emailProvider==='guerrilla') {
+                    const res = await fetch(CONFIG.PROVIDERS[emailProvider].base + '?f=fetch_email&email_id=' + msg.id + '&sid_token=' + emailToken);
+                    if(!res.ok) throw new Error('Failed');
+                    const raw = await res.json();
+                    fullMsg = {
+                        subject: raw.mail_subject,
+                        from: { address: raw.mail_from },
+                        createdAt: raw.mail_timestamp ? raw.mail_timestamp * 1000 : Date.now(),
+                        text: raw.mail_body || '',
+                        html: raw.mail_body || ''
+                    };
                 } else {
                     const base=CONFIG.PROVIDERS[emailProvider].base;
                     fullMsg=await getMessage(base,emailToken,msg.id);
@@ -1267,7 +1295,6 @@
                 
                 if(mBody) mBody.textContent=bodyText; 
                 
-                // تحديث حالة القراءة
                 messages[index].seen = true;
                 saveMessagesToCache(messages);
                 renderMessages();
@@ -1501,7 +1528,6 @@
             });
         }
 
-        // تشغيل التطبيق بأمان تام
         document.addEventListener('DOMContentLoaded', function() {
             const msgModal = document.getElementById('messageModal');
             if(msgModal) {
