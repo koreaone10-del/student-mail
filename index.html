@@ -10,6 +10,7 @@
     <meta name="googlebot" content="index, follow">
     <meta name="revisit-after" content="7 days">
 
+    <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://studentmail.github.io">
     <meta property="og:title" content="Student Mail - بريد مؤقت للطلاب">
@@ -19,26 +20,30 @@
     <meta property="og:locale:alternate" content="en_US">
     <meta property="og:site_name" content="Student Mail">
 
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Student Mail - بريد مؤقت للطلاب">
     <meta name="twitter:description" content="بريد مؤقت للطلاب بأعلى معايير الأمان">
     <meta name="twitter:image" content="https://studentmail.github.io/images/og-image.png">
     <meta name="twitter:creator" content="@chouba_dev">
 
+    <!-- Canonical URL -->
     <link rel="canonical" href="https://studentmail.github.io">
 
+    <!-- Alternate Languages -->
     <link rel="alternate" hreflang="ar" href="https://studentmail.github.io/?lang=ar">
     <link rel="alternate" hreflang="en" href="https://studentmail.github.io/?lang=en">
     <link rel="alternate" hreflang="x-default" href="https://studentmail.github.io">
 
+    <!-- Preconnect for Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://api.mail.tm">
     <link rel="dns-prefetch" href="https://api.mail.gw">
-    <link rel="dns-prefetch" href="https://api.guerrillamail.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://apilist.tronscanapi.com">
 
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
 
@@ -323,16 +328,19 @@
     </style>
 </head>
 <body>
+    <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="spinner"></div>
         <p id="loadingText">جاري التحميل...</p>
     </div>
 
+    <!-- Toast -->
     <div class="toast" id="toast">
         <i class="fas fa-check-circle"></i>
         <span id="toastMessage">تم النسخ!</span>
     </div>
 
+    <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="#" class="logo">
@@ -353,6 +361,7 @@
         </div>
     </nav>
 
+    <!-- Hero -->
     <section class="hero" id="hero">
         <div class="container">
             <div class="hero-grid">
@@ -419,6 +428,7 @@
         </div>
     </section>
 
+    <!-- Inbox -->
     <section class="inbox-section" id="inbox">
         <div class="container">
             <div class="section-header">
@@ -486,6 +496,7 @@
         </div>
     </section>
 
+    <!-- Services -->
     <section class="services-section" id="services">
         <div class="container">
             <div class="section-header">
@@ -524,6 +535,7 @@
         </div>
     </section>
 
+    <!-- Pricing -->
     <section class="pricing-section" id="pricing">
         <div class="container">
             <div class="section-header">
@@ -569,6 +581,7 @@
         </div>
     </section>
 
+    <!-- Wallet -->
     <section class="wallet-section" id="wallet">
         <div class="container">
             <div class="wallet-box">
@@ -595,6 +608,7 @@
         </div>
     </section>
 
+    <!-- Contact -->
     <section class="contact-section" id="contact">
         <div class="container">
             <div class="section-header">
@@ -620,6 +634,7 @@
         </div>
     </section>
 
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -641,6 +656,7 @@
         </div>
     </footer>
 
+    <!-- Message Modal -->
     <div class="modal-overlay" id="messageModal" role="dialog" aria-modal="true" aria-labelledby="modalSubject">
         <div class="modal-content">
             <div class="modal-header">
@@ -670,7 +686,6 @@
             PROVIDERS: {
                 mailtm:    { kind: 'mailtm',    base: 'https://api.mail.tm' },
                 mailgw:    { kind: 'mailtm',    base: 'https://api.mail.gw' },
-                guerrilla: { kind: 'guerrilla', base: 'https://api.guerrillamail.com/ajax.php' },
                 secmail:   { kind: '1secmail',  base: 'https://www.1secmail.com/api/v1/' }
             }
         };
@@ -685,16 +700,29 @@
 
         // ===== SECURITY =====
         const Security = {
-            rateLimit: { attempts: {}, check(key, max=5, window=60000) {
-                const now = Date.now();
-                if (!this.attempts[key]) this.attempts[key] = {count:0, first:now};
-                if (now - this.attempts[key].first > window) this.attempts[key] = {count:0, first:now};
-                this.attempts[key].count++;
-                return this.attempts[key].count <= max;
-            }},
-            sanitize(input) { return typeof input === 'string' ? input.replace(/[<>'"]/g, c=>({'<':'&lt;','>':'&gt;',"'":'&#x27;','"':'&quot;'}[c])) : ''; },
-            escapeHtml(t) { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; },
-            getFingerprint() {
+            rateLimit: { 
+                attempts: {}, 
+                check: function(key, max, windowMs) {
+                    if(!max) max = 5;
+                    if(!windowMs) windowMs = 60000;
+                    const now = Date.now();
+                    if (!this.attempts[key]) this.attempts[key] = {count:0, first:now};
+                    if (now - this.attempts[key].first > windowMs) this.attempts[key] = {count:0, first:now};
+                    this.attempts[key].count++;
+                    return this.attempts[key].count <= max;
+                }
+            },
+            sanitize: function(input) { 
+                return typeof input === 'string' ? input.replace(/[<>'"]/g, function(c) {
+                    return {'<':'&lt;','>':'&gt;',"'":'&#x27;','"':'&quot;'}[c];
+                }) : ''; 
+            },
+            escapeHtml: function(t) { 
+                const d=document.createElement('div'); 
+                d.textContent=t; 
+                return d.innerHTML; 
+            },
+            getFingerprint: function() {
                 try {
                     const c=document.createElement('canvas'); 
                     const x=c.getContext('2d');
@@ -702,18 +730,17 @@
                     x.textBaseline='top'; x.font='14px Arial'; x.fillText('SM',2,2);
                     return btoa(c.toDataURL()).slice(0,32);
                 } catch(e) {
-                    // حماية متقدمة: إذا منع متصفح الهاتف (مثل كروم أندرويد) الوصول، نمرر مفتاح بديل حتى لا يتعطل السكريبت
                     return 'fallback_mobile_key_123';
                 }
             },
-            encrypt(data, key) { 
+            encrypt: function(data, key) { 
                 try {
                     const t=JSON.stringify(data); let r=''; 
                     for(let i=0;i<t.length;i++) r+=String.fromCharCode(t.charCodeAt(i)^key.charCodeAt(i%key.length)); 
                     return btoa(r); 
                 } catch(e) { return null; }
             },
-            decrypt(data, key) { 
+            decrypt: function(data, key) { 
                 try{
                     const t=atob(data); let r=''; 
                     for(let i=0;i<t.length;i++) r+=String.fromCharCode(t.charCodeAt(i)^key.charCodeAt(i%key.length)); 
@@ -731,7 +758,8 @@
         };
 
         // ===== UI FUNCTIONS =====
-        function showToast(message, type='success') {
+        function showToast(message, type) {
+            if(!type) type = 'success';
             const toast = document.getElementById('toast');
             if(!toast) return;
             const icon = toast.querySelector('i');
@@ -740,15 +768,17 @@
             toast.className = 'toast ' + type;
             if(icon) icon.className = type==='error'?'fas fa-exclamation-circle':type==='warning'?'fas fa-exclamation-triangle':type==='info'?'fas fa-info-circle':'fas fa-check-circle';
             toast.classList.add('show');
-            setTimeout(()=>toast.classList.remove('show'), 4000);
+            setTimeout(function(){ toast.classList.remove('show'); }, 4000);
         }
+
         function showLoading(show, text) { 
             const o=document.getElementById('loadingOverlay'); 
             const txt=document.getElementById('loadingText');
             if(!o) return;
             if(text && txt) txt.textContent=text; 
-            o.classList.toggle('active',show); 
+            if(show) { o.classList.add('active'); } else { o.classList.remove('active'); }
         }
+
         async function copyToClipboard(text) { 
             try{
                 await navigator.clipboard.writeText(text);
@@ -763,13 +793,14 @@
                 showToast(translations[currentLang].copied);
             } 
         }
+
         function copyEmail() { if(currentEmail)copyToClipboard(currentEmail); }
         function copyInboxEmail() { if(currentEmail)copyToClipboard(currentEmail); }
         function copyWallet() { copyToClipboard(CONFIG.WALLET_ADDRESS); }
         
         function updateCustomInputUI() {
             const input = document.getElementById('customUsername');
-            if(!input) return; // حماية في حالة تم تشغيل كود HTML قديم
+            if(!input) return; 
             if(isPremium) {
                 input.disabled = false;
                 input.placeholder = translations[currentLang].placeholderInput || 'مثال: ali2026';
@@ -786,11 +817,15 @@
             document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr'; 
             const langBtn = document.getElementById('langBtn');
             if(langBtn) langBtn.textContent = currentLang === 'ar' ? 'EN' : 'AR'; 
-            document.querySelectorAll('[data-ar][data-en]').forEach(el => {
+            
+            const elements = document.querySelectorAll('[data-ar][data-en]');
+            for(let i=0; i<elements.length; i++) {
+                const el = elements[i];
                 if(el.tagName !== 'INPUT' || !el.hasAttribute('value')) {
                     el.innerHTML = el.getAttribute('data-' + currentLang);
                 }
-            }); 
+            }
+            
             try { localStorage.setItem('studentmail_lang', currentLang); } catch(e){}
             updateCustomInputUI();
         }
@@ -799,10 +834,18 @@
             const w = document.getElementById('wallet');
             if(w) w.scrollIntoView({behavior:'smooth'}); 
         }
+        
         function toggleMobileMenu() { 
             const nav = document.getElementById('navLinks');
-            if(nav) nav.classList.toggle('active'); 
+            if(nav) {
+                if(nav.classList.contains('active')) {
+                    nav.classList.remove('active');
+                } else {
+                    nav.classList.add('active');
+                }
+            }
         }
+        
         function closeModal() { 
             const m = document.getElementById('messageModal');
             if(m) m.classList.remove('active'); 
@@ -816,11 +859,10 @@
                     const res = await fetch(p.base + '/domains');
                     if (!res.ok) return [];
                     const data = await res.json();
-                    return (data['hydra:member'] || []).map(d => d.domain);
-                }
-                if (p.kind === 'guerrilla') {
-                    // تم إزالة النطاقات المعطلة التي طلبتها
-                    return ['guerrillamail.com', 'sharklasers.com', 'grr.la', 'guerrillamail.info', 'guerrillamail.biz', 'guerrillamail.de', 'guerrillamail.net', 'guerrillamail.org'];
+                    if(data && data['hydra:member']) {
+                        return data['hydra:member'].map(function(d){ return d.domain; });
+                    }
+                    return [];
                 }
                 if (p.kind === '1secmail') {
                     const res = await fetch(p.base + '?action=getDomainList');
@@ -843,44 +885,56 @@
             
             try {
                 const keys=Object.keys(CONFIG.PROVIDERS);
-                const results=await Promise.allSettled(keys.map(k=>fetchProviderDomains(k)));
-                results.forEach((r,i)=>{ 
-                    if(r.status==='fulfilled'){ 
-                        r.value.forEach(d=>{ 
-                            if(d&&!domainProviderMap[d]){ 
-                                domains.push(d); 
-                                domainProviderMap[d]=keys[i]; 
-                            } 
-                        }); 
-                    } 
+                
+                // Using Promise.all with catch fallback (Compatible with all mobile browsers)
+                const promises = keys.map(function(k) {
+                    return fetchProviderDomains(k).catch(function() { return []; });
                 });
                 
-                // إضافة نطاقات احتياطية موثوقة
+                const results = await Promise.all(promises);
+                
+                for(let i=0; i<results.length; i++) {
+                    const providerDomains = results[i];
+                    if(providerDomains && providerDomains.length > 0) {
+                        for(let j=0; j<providerDomains.length; j++) {
+                            const d = providerDomains[j];
+                            if(d && !domainProviderMap[d]) {
+                                domains.push(d);
+                                domainProviderMap[d] = keys[i];
+                            }
+                        }
+                    }
+                }
+                
                 const backup1SecDomains = ['1secmail.com', '1secmail.org', '1secmail.net', 'kzizi.com', 'xojxe.com', 'yoggm.com'];
-                backup1SecDomains.forEach(d => {
+                for(let i=0; i<backup1SecDomains.length; i++) {
+                    const d = backup1SecDomains[i];
                     if(!domainProviderMap[d]) {
                         domains.push(d);
                         domainProviderMap[d] = 'secmail';
                     }
-                });
+                }
 
                 if(domains.length===0) throw new Error('No domains');
                 
                 if(select) {
                     select.innerHTML='';
-                    domains.forEach((d,i)=>{
+                    for(let i=0; i<domains.length; i++) {
+                        const d = domains[i];
                         const opt=document.createElement('option');
                         opt.value=d;
-                        opt.textContent='@'+d+(/edu|student|academy/i.test(d)?' [EDU]':'');
-                        if(i===0)opt.selected=true;
+                        const isEdu = /edu|student|academy/.test(d);
+                        opt.textContent='@' + d + (isEdu ? ' [EDU]' : '');
+                        if(i===0) opt.selected=true;
                         select.appendChild(opt);
-                    });
+                    }
                 }
                 try {
                     localStorage.setItem('studentmail_domains',JSON.stringify(domains));
                     localStorage.setItem('studentmail_domain_map',JSON.stringify(domainProviderMap));
                 } catch(e){}
                 
+                showToast(translations[currentLang].domainLoaded);
             } catch(e) {
                 let cachedD = null, cachedM = null;
                 try {
@@ -893,17 +947,17 @@
                         domains=JSON.parse(cachedD); 
                         domainProviderMap=JSON.parse(cachedM); 
                     } catch(err) {
-                        domains=['sharklasers.com','grr.la','guerrillamail.com']; 
-                        domains.forEach(d=>domainProviderMap[d]='guerrilla'); 
+                        domains=['1secmail.com','1secmail.org']; 
+                        domains.forEach(function(d){ domainProviderMap[d]='secmail'; });
                     }
                 } else { 
-                    domains=['sharklasers.com','grr.la','guerrillamail.com']; 
-                    domains.forEach(d=>domainProviderMap[d]='guerrilla'); 
+                    domains=['1secmail.com','1secmail.org']; 
+                    domains.forEach(function(d){ domainProviderMap[d]='secmail'; });
                 }
                 
                 if(select) {
                     select.innerHTML=''; 
-                    domains.forEach(d=>{
+                    domains.forEach(function(d){
                         const opt=document.createElement('option');
                         opt.value=d;
                         opt.textContent='@'+d;
@@ -931,14 +985,66 @@
         }
 
         // ===== EMAIL API =====
-        function generateRandomString(length) { const chars='abcdefghijklmnopqrstuvwxyz0123456789'; let r=''; for(let i=0;i<length;i++)r+=chars.charAt(Math.floor(Math.random()*chars.length)); return r; }
-        async function createAccount(base,address,password) { const res=await fetch(base+'/accounts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({address,password})}); if(!res.ok){const e=await res.json().catch(()=>({})); throw new Error(e.detail||'Failed');} return await res.json(); }
-        async function getToken(base,address,password) { const res=await fetch(base+'/token',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({address,password})}); if(!res.ok)throw new Error('Failed'); const d=await res.json(); return d.token; }
-        async function getMessages(base,token) { const res=await fetch(base+'/messages',{headers:{'Authorization':'Bearer '+token}}); if(!res.ok)throw new Error('Failed'); const d=await res.json(); return d['hydra:member']||[]; }
-        async function getMessage(base,token,id) { const res=await fetch(base+'/messages/'+id,{headers:{'Authorization':'Bearer '+token}}); if(!res.ok)throw new Error('Failed'); return await res.json(); }
+        function generateRandomString(length) { 
+            const chars='abcdefghijklmnopqrstuvwxyz0123456789'; let r=''; 
+            for(let i=0;i<length;i++) r+=chars.charAt(Math.floor(Math.random()*chars.length)); 
+            return r; 
+        }
+
+        async function createAccount(base,address,password) { 
+            const res=await fetch(base+'/accounts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({address:address,password:password})}); 
+            if(!res.ok){
+                let e = {};
+                try { e = await res.json(); } catch(err){}
+                throw new Error(e.detail||'Failed');
+            } 
+            return await res.json(); 
+        }
+
+        async function getToken(base,address,password) { 
+            const res=await fetch(base+'/token',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({address:address,password:password})}); 
+            if(!res.ok) throw new Error('Failed'); 
+            const d=await res.json(); 
+            return d.token; 
+        }
+
+        async function getMessages(base,token) { 
+            const res=await fetch(base+'/messages',{headers:{'Authorization':'Bearer '+token}}); 
+            if(!res.ok) throw new Error('Failed'); 
+            const d=await res.json(); 
+            return d['hydra:member']||[]; 
+        }
+
+        async function getMessage(base,token,id) { 
+            const res=await fetch(base+'/messages/'+id,{headers:{'Authorization':'Bearer '+token}}); 
+            if(!res.ok) throw new Error('Failed'); 
+            return await res.json(); 
+        }
         
-        async function secmailGetMessages(login,domain) { const res=await fetch(CONFIG.PROVIDERS.secmail.base+'?action=getMessages&login='+encodeURIComponent(login)+'&domain='+encodeURIComponent(domain)); if(!res.ok)throw new Error('Failed'); return await res.json(); }
-        async function secmailGetMessage(login,domain,id) { const res=await fetch(CONFIG.PROVIDERS.secmail.base+'?action=readMessage&login='+encodeURIComponent(login)+'&domain='+encodeURIComponent(domain)+'&id='+id); if(!res.ok)throw new Error('Failed'); return await res.json(); }
+        async function secmailGetMessages(login,domain) { 
+            const res=await fetch(CONFIG.PROVIDERS.secmail.base+'?action=getMessages&login='+encodeURIComponent(login)+'&domain='+encodeURIComponent(domain)); 
+            if(!res.ok) throw new Error('Failed'); 
+            return await res.json(); 
+        }
+
+        async function secmailGetMessage(login,domain,id) { 
+            const res=await fetch(CONFIG.PROVIDERS.secmail.base+'?action=readMessage&login='+encodeURIComponent(login)+'&domain='+encodeURIComponent(domain)+'&id='+id); 
+            if(!res.ok) throw new Error('Failed'); 
+            return await res.json(); 
+        }
+
+        // حفظ كاش الرسائل محلياً لضمان عدم اختفائها
+        function saveMessagesToCache(msgs) {
+            try { localStorage.setItem('studentmail_msgs_cache', JSON.stringify(msgs)); } catch(e){}
+        }
+
+        function getMessagesFromCache() {
+            try { 
+                const data = localStorage.getItem('studentmail_msgs_cache');
+                if(data) return JSON.parse(data);
+            } catch(e){}
+            return [];
+        }
 
         async function createTempEmail() {
             showLoading(true, currentLang==='ar'?'جاري إنشاء بريدك...':'Creating your email...');
@@ -966,13 +1072,6 @@
                 
                 if(emailProvider === 'secmail'){
                     emailToken=null; emailPassword=null;
-                } else if (emailProvider === 'guerrilla') {
-                    const res = await fetch(CONFIG.PROVIDERS[emailProvider].base + '?f=get_email_address');
-                    if(!res.ok) throw new Error('Guerrilla API Failed');
-                    const data = await res.json();
-                    emailToken = data.sid_token;
-                    emailPassword = null;
-                    await fetch(CONFIG.PROVIDERS[emailProvider].base + '?f=set_email_user&email_user=' + emailUsername + '&lang=en&sid_token=' + emailToken);
                 } else {
                     const base = CONFIG.PROVIDERS[emailProvider].base;
                     const password = generateRandomString(16);
@@ -990,8 +1089,19 @@
                 currentEmail = address; 
                 timeLeft = isPremium ? 2592000 : 3600; 
                 
-                const encrypted = Security.encrypt({email:currentEmail,username:emailUsername,domain:currentDomain,provider:emailProvider,token:emailToken,password:emailPassword,time:Date.now()}, ENCRYPTION_KEY);
+                const encrypted = Security.encrypt({
+                    email: currentEmail,
+                    username: emailUsername,
+                    domain: currentDomain,
+                    provider: emailProvider,
+                    token: emailToken,
+                    password: emailPassword,
+                    time: Date.now()
+                }, ENCRYPTION_KEY);
+
                 try { localStorage.setItem('studentmail_session', encrypted); } catch(e){}
+                try { localStorage.removeItem('studentmail_msgs_cache'); } catch(e){}
+                messages = [];
                 
                 const hEmail = document.getElementById('heroEmail');
                 const iEmail = document.getElementById('inboxEmail');
@@ -1020,7 +1130,10 @@
             clearInterval(pollInterval); 
             clearInterval(timerInterval); 
             currentEmail=null; emailUsername=null; emailToken=null; emailPassword=null; emailProvider=null; messages=[]; 
-            try{ localStorage.removeItem('studentmail_session'); }catch(e){}
+            try{ 
+                localStorage.removeItem('studentmail_session'); 
+                localStorage.removeItem('studentmail_msgs_cache');
+            }catch(e){}
             await createTempEmail(); 
         }
         
@@ -1030,30 +1143,58 @@
             if(btn) btn.classList.add('spinning');
             
             try{
-                let newMessages;
+                let fetchedMessages = [];
                 if(emailProvider==='secmail'){
                     const raw=await secmailGetMessages(emailUsername,currentDomain);
-                    newMessages=(raw||[]).map(m=>({id:m.id, from:{address:m.from}, subject:m.subject, createdAt:m.date, seen:false}));
-                } else if (emailProvider==='guerrilla') {
-                    // تم التعديل لجلب القائمة كاملة لتفادي اختفاء الرسائل
-                    const res = await fetch(CONFIG.PROVIDERS[emailProvider].base + '?f=get_email_list&offset=0&sid_token=' + emailToken);
-                    if(!res.ok) throw new Error('Failed');
-                    const data = await res.json();
-                    newMessages = (data.list || []).filter(m => m.mail_id !== '1').map(m => ({
-                        id: m.mail_id,
-                        from: { address: m.mail_from },
-                        subject: m.mail_subject,
-                        createdAt: m.mail_timestamp ? m.mail_timestamp * 1000 : Date.now(),
-                        seen: m.mail_read === '1'
-                    }));
+                    if(raw && Array.isArray(raw)){
+                        fetchedMessages = raw.map(function(m){
+                            return {id:m.id, from:{address:m.from}, subject:m.subject, createdAt:m.date, seen:false};
+                        });
+                    }
                 } else {
                     const base=CONFIG.PROVIDERS[emailProvider].base;
-                    newMessages=await getMessages(base,emailToken);
+                    fetchedMessages=await getMessages(base,emailToken);
                 }
-                messages = newMessages; 
+
+                // دمج الرسائل الجديدة مع القديمة المحفوظة في الكاش لضمان عدم اختفائها
+                const cachedMessages = getMessagesFromCache();
+                const allMessagesMap = {};
+                
+                for(let i=0; i<cachedMessages.length; i++) {
+                    allMessagesMap[cachedMessages[i].id] = cachedMessages[i];
+                }
+                for(let i=0; i<fetchedMessages.length; i++) {
+                    allMessagesMap[fetchedMessages[i].id] = fetchedMessages[i];
+                }
+                
+                const newCombinedMessages = [];
+                for (let key in allMessagesMap) {
+                    if (allMessagesMap.hasOwnProperty(key)) {
+                        newCombinedMessages.push(allMessagesMap[key]);
+                    }
+                }
+
+                // ترتيب الرسائل (الأحدث أولاً)
+                newCombinedMessages.sort(function(a, b) {
+                    const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+                    const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+                    return dateB - dateA;
+                });
+                
+                if(newCombinedMessages.length > messages.length) {
+                    showToast(translations[currentLang].refreshSuccess + ' (' + (newCombinedMessages.length - messages.length) + ')');
+                }
+
+                messages = newCombinedMessages; 
+                saveMessagesToCache(messages);
                 renderMessages();
-                if(newMessages.length > 0) showToast(translations[currentLang].refreshSuccess+' ('+newMessages.length+')');
+                
             }catch(e){
+                // في حالة فشل جلب الرسائل، اعرض الرسائل من الكاش على الأقل
+                if(messages.length === 0) {
+                    messages = getMessagesFromCache();
+                    renderMessages();
+                }
             }finally{
                 if(btn) btn.classList.remove('spinning');
             }
@@ -1070,13 +1211,22 @@
                 return;
             } 
             
-            container.innerHTML=messages.map((msg,i)=>{
-                const from=msg.from?.name||msg.from?.address||'Unknown'; 
-                const subject=Security.sanitize(msg.subject||(currentLang==='ar'?'بدون موضوع':'No subject')); 
-                const date=msg.createdAt?new Date(msg.createdAt).toLocaleTimeString(currentLang==='ar'?'ar-DZ':'en-US'):'Now'; 
-                const isUnread=!msg.seen; 
-                return '<div class="message-row '+(isUnread?'unread':'')+'" onclick="openMessage('+i+')"><div class="message-avatar">'+Security.escapeHtml(from.charAt(0).toUpperCase())+'</div><div class="message-content"><h4>'+subject+'</h4><p>'+Security.escapeHtml(from)+'</p></div><div class="message-meta"><span class="time">'+date+'</span></div></div>';
-            }).join(''); 
+            let html = '';
+            for(let i=0; i<messages.length; i++) {
+                const msg = messages[i];
+                let fromName = 'Unknown';
+                if(msg.from) {
+                    if(msg.from.name) fromName = msg.from.name;
+                    else if(msg.from.address) fromName = msg.from.address;
+                }
+                
+                const subject = Security.sanitize(msg.subject || (currentLang==='ar'?'بدون موضوع':'No subject')); 
+                const date = msg.createdAt ? new Date(msg.createdAt).toLocaleTimeString(currentLang==='ar'?'ar-DZ':'en-US') : 'Now'; 
+                const isUnread = !msg.seen; 
+                
+                html += '<div class="message-row '+(isUnread?'unread':'')+'" onclick="openMessage('+i+')"><div class="message-avatar">'+Security.escapeHtml(fromName.charAt(0).toUpperCase())+'</div><div class="message-content"><h4>'+subject+'</h4><p>'+Security.escapeHtml(fromName)+'</p></div><div class="message-meta"><span class="time">'+date+'</span></div></div>';
+            }
+            container.innerHTML = html;
         }
         
         async function openMessage(index) {
@@ -1086,18 +1236,9 @@
                 let fullMsg;
                 if(emailProvider==='secmail'){
                     const raw=await secmailGetMessage(emailUsername,currentDomain,msg.id);
-                    fullMsg={ subject:raw.subject, from:{address:raw.from}, createdAt:raw.date, text:raw.textBody||raw.body||'', html:raw.htmlBody||'' };
-                } else if (emailProvider==='guerrilla') {
-                    const res = await fetch(CONFIG.PROVIDERS[emailProvider].base + '?f=fetch_email&email_id=' + msg.id + '&sid_token=' + emailToken);
-                    if(!res.ok) throw new Error('Failed');
-                    const raw = await res.json();
-                    fullMsg = {
-                        subject: raw.mail_subject,
-                        from: { address: raw.mail_from },
-                        createdAt: raw.mail_timestamp ? raw.mail_timestamp * 1000 : Date.now(),
-                        text: raw.mail_body || '',
-                        html: raw.mail_body || ''
-                    };
+                    let fAddr = 'Unknown';
+                    if(raw.from) fAddr = raw.from;
+                    fullMsg={ subject:raw.subject, from:{address:fAddr}, createdAt:raw.date, text:raw.textBody||raw.body||'', html:raw.htmlBody||'' };
                 } else {
                     const base=CONFIG.PROVIDERS[emailProvider].base;
                     fullMsg=await getMessage(base,emailToken,msg.id);
@@ -1109,18 +1250,28 @@
                 const mBody = document.getElementById('modalBody');
                 const mModal = document.getElementById('messageModal');
                 
-                if(mSubj) mSubj.textContent=Security.sanitize(fullMsg.subject||(currentLang==='ar'?'بدون موضوع':'No subject')); 
-                if(mFrom) mFrom.textContent=Security.escapeHtml(fullMsg.from?.address||'Unknown'); 
+                if(mSubj) mSubj.textContent = Security.sanitize(fullMsg.subject || (currentLang==='ar'?'بدون موضوع':'No subject')); 
+                
+                let fromAddr = 'Unknown';
+                if(fullMsg.from && fullMsg.from.address) fromAddr = fullMsg.from.address;
+                if(mFrom) mFrom.textContent = Security.escapeHtml(fromAddr); 
+                
                 if(mDate) mDate.textContent=fullMsg.createdAt?new Date(fullMsg.createdAt).toLocaleString(currentLang==='ar'?'ar-DZ':'en-US'):'---'; 
                 
                 let bodyText = fullMsg.text||fullMsg.html||''; 
-                if(bodyText.includes('<')){
+                if(bodyText.indexOf('<') !== -1){
                     const t=document.createElement('div');
                     t.innerHTML=bodyText;
                     bodyText=t.textContent||t.innerText||bodyText;
                 } 
                 
                 if(mBody) mBody.textContent=bodyText; 
+                
+                // تحديث حالة القراءة
+                messages[index].seen = true;
+                saveMessagesToCache(messages);
+                renderMessages();
+
                 if(mModal) mModal.classList.add('active');
             }catch(e){
                 showToast(translations[currentLang].error,'error');
@@ -1131,12 +1282,14 @@
         
         function startPolling() { 
             clearInterval(pollInterval); 
-            pollInterval = setInterval(() => { if(currentEmail) refreshInbox(); }, 15000); 
+            pollInterval = setInterval(function() { 
+                if(currentEmail) refreshInbox(); 
+            }, 15000); 
         }
         
         function startTimer() { 
             clearInterval(timerInterval); 
-            timerInterval = setInterval(() => {
+            timerInterval = setInterval(function() {
                 timeLeft--; 
                 const timerEl = document.getElementById('timer');
                 
@@ -1170,4 +1323,194 @@
             
             if(!txidInput || !statusEl || !verifyBtn) return;
             
-            const txid=txidInput.value.
+            const txid=txidInput.value.trim();
+            if(!txid){showToast(translations[currentLang].enterTxid,'warning'); return;}
+            if(!/^[a-f0-9]{64}$/i.test(txid)){showToast(translations[currentLang].invalidTxid,'error'); return;}
+            if(isPremium){showToast(translations[currentLang].premiumAlready,'warning'); return;}
+            
+            verifyBtn.disabled=true; 
+            statusEl.className='verify-status pending'; 
+            statusEl.textContent=currentLang==='ar'?'جاري التحقق...':'Verifying...';
+            
+            try {
+                let verified=false;
+                try{ 
+                    const res=await fetch(CONFIG.TRONSCAN_API+'/api/transaction-info?hash='+encodeURIComponent(txid)); 
+                    if(res.ok){ 
+                        const d=await res.json(); 
+                        if(d&&d.hash){ 
+                            let toAddr = d.toAddress || '';
+                            let amount = 0;
+                            
+                            if(!toAddr && d.contractData && d.contractData[0] && d.contractData[0].parameter && d.contractData[0].parameter.value) {
+                                toAddr = d.contractData[0].parameter.value.to_address || '';
+                                amount = parseInt(d.contractData[0].parameter.value.amount || '0') / 1e6;
+                            } else if (d.contractData && d.contractData[0] && d.contractData[0].parameter && d.contractData[0].parameter.value) {
+                                amount = parseInt(d.contractData[0].parameter.value.amount || '0') / 1e6;
+                            }
+                            
+                            if(toAddr.toLowerCase() === CONFIG.WALLET_ADDRESS.toLowerCase() && amount >= CONFIG.PREMIUM_PRICE*0.95) {
+                                verified=true; 
+                            }
+                        } 
+                    } 
+                }catch(e){}
+                
+                if(!verified){ 
+                    try{ 
+                        const res=await fetch(CONFIG.TRONGRID_API+'/v1/transactions/'+txid+'/events'); 
+                        if(res.ok){ 
+                            const d=await res.json(); 
+                            const events=d.data||[]; 
+                            for(let i=0; i<events.length; i++){ 
+                                const event = events[i];
+                                let toAddr = '';
+                                let amount = 0;
+                                
+                                if(event.result) {
+                                    toAddr = (event.result.to || event.result['_to'] || '').toLowerCase();
+                                    amount = parseInt(event.result.value || event.result['_value'] || '0') / 1e6;
+                                }
+                                
+                                if(toAddr === CONFIG.WALLET_ADDRESS.toLowerCase() && amount >= CONFIG.PREMIUM_PRICE*0.95){ 
+                                    verified=true; 
+                                    break; 
+                                } 
+                            } 
+                        } 
+                    }catch(e){} 
+                }
+                
+                if(verified){ 
+                    activatePremium(txid); 
+                } else { 
+                    statusEl.className='verify-status error'; 
+                    statusEl.textContent=translations[currentLang].verifyError; 
+                    showToast(translations[currentLang].verifyError,'error'); 
+                }
+            } catch(e) { 
+                statusEl.className='verify-status error'; 
+                statusEl.textContent=translations[currentLang].verifyError; 
+                showToast(translations[currentLang].verifyError,'error'); 
+            } finally { 
+                verifyBtn.disabled=false; 
+            }
+        }
+        
+        function activatePremium(txid) {
+            isPremium=true;
+            const encrypted=Security.encrypt({premium:true,txid:txid,date:new Date().toISOString(),fingerprint:Security.getFingerprint()},ENCRYPTION_KEY);
+            try{ localStorage.setItem('studentmail_premium',encrypted); }catch(e){}
+            
+            const badge=document.getElementById('premiumBadge'); 
+            if(badge) {
+                badge.className='premium-badge active'; 
+                badge.innerHTML='<i class="fas fa-check-circle"></i> '+(currentLang==='ar'?'مفعل':'Active');
+            }
+            
+            const statusEl=document.getElementById('verifyStatus'); 
+            if(statusEl) {
+                statusEl.className='verify-status success'; 
+                statusEl.textContent=translations[currentLang].premiumActivated;
+            }
+            
+            updateCustomInputUI();
+            showToast(translations[currentLang].premiumActivated);
+        }
+        
+        function checkPremiumStatus() { 
+            let saved = null;
+            try { saved = localStorage.getItem('studentmail_premium'); } catch(e){}
+            
+            if(saved){ 
+                try { 
+                    const d=Security.decrypt(saved,ENCRYPTION_KEY); 
+                    if(d&&d.premium){
+                        isPremium=true; 
+                        const badge=document.getElementById('premiumBadge'); 
+                        if(badge) {
+                            badge.className='premium-badge active'; 
+                            badge.innerHTML='<i class="fas fa-check-circle"></i> '+(currentLang==='ar'?'مفعل':'Active');
+                        }
+                    } 
+                }catch(e){
+                    try{ localStorage.removeItem('studentmail_premium'); }catch(err){}
+                } 
+            } 
+        }
+
+        // ===== INIT =====
+        async function init() {
+            let savedLang = null;
+            try { savedLang = localStorage.getItem('studentmail_lang'); } catch(e){}
+            
+            if(savedLang && savedLang !== currentLang) toggleLanguage();
+            
+            checkPremiumStatus();
+            updateCustomInputUI();
+            await loadDomains();
+            
+            let savedSession = null;
+            try { savedSession = localStorage.getItem('studentmail_session'); } catch(e){}
+            
+            if(savedSession){ 
+                try { 
+                    const d=Security.decrypt(savedSession,ENCRYPTION_KEY); 
+                    if(d && d.email && d.time){ 
+                        const elapsed=Math.floor((Date.now()-d.time)/1000); 
+                        const maxTime = isPremium ? 2592000 : 3600;
+                        if(elapsed < maxTime){ 
+                            currentEmail=d.email; emailUsername=d.username; currentDomain=d.domain; emailProvider=d.provider||'mailtm'; emailToken=d.token; emailPassword=d.password; timeLeft=maxTime-elapsed; 
+                            
+                            const select=document.getElementById('domainSelect'); 
+                            if(select && domains.includes(currentDomain)) select.value=currentDomain; 
+                            
+                            const hEmail = document.getElementById('heroEmail');
+                            const iEmail = document.getElementById('inboxEmail');
+                            const inboxSect = document.getElementById('inbox');
+                            
+                            if(hEmail) hEmail.textContent=currentEmail; 
+                            if(iEmail) iEmail.value=currentEmail; 
+                            if(inboxSect) inboxSect.classList.add('active'); 
+                            
+                            messages = getMessagesFromCache();
+                            renderMessages();
+
+                            startPolling(); startTimer(); await refreshInbox(); 
+                        } else { 
+                            try { 
+                                localStorage.removeItem('studentmail_session'); 
+                                localStorage.removeItem('studentmail_msgs_cache');
+                            } catch(err){}
+                        } 
+                    } 
+                }catch(e){
+                    try { 
+                        localStorage.removeItem('studentmail_session');
+                        localStorage.removeItem('studentmail_msgs_cache');
+                    } catch(err){}
+                } 
+            }
+            
+            window.addEventListener('scroll', function() {
+                const nav = document.getElementById('navbar');
+                if(nav) {
+                    if(window.scrollY > 50) nav.classList.add('scrolled');
+                    else nav.classList.remove('scrolled');
+                }
+            });
+        }
+
+        // تشغيل التطبيق بأمان تام
+        document.addEventListener('DOMContentLoaded', function() {
+            const msgModal = document.getElementById('messageModal');
+            if(msgModal) {
+                msgModal.addEventListener('click',function(e){if(e.target===this)closeModal();});
+            }
+            document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+            
+            init();
+        });
+    </script>
+</body>
+</html>
