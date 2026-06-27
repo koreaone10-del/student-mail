@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Student Mail - بريد مؤقت ودائم للطلاب بأعلى معايير الأمان. احصل على بريد @edu مجاني للتسجيل في المواقع والمنصات التعليمية.">
+    <meta name="keywords" content="بريد مؤقت, بريد الطلاب, email temporaire, temporary email, student email, edu email, بريد edu, بريد مجاني, بريد مؤقت للطلاب, temp mail, disposable email, fake email, 10 minute mail, guerilla mail">
+    <meta name="author" content="CHOUBA">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="revisit-after" content="7 days">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://studentmail.github.io">
+    <meta property="og:title" content="Student Mail - بريد مؤقت ودائم للطلاب">
+    <meta property="og:description" content="بريد مؤقت ودائم للطلاب بأعلى معايير الأمان. احصل على بريد @edu مجاني الآن!">
+    <meta property="og:image" content="https://studentmail.github.io/images/og-image.png">
+    <meta property="og:locale" content="ar_DZ">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:site_name" content="Student Mail">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Student Mail - بريد مؤقت ودائم للطلاب">
+    <meta name="twitter:description" content="بريد مؤقت ودائم للطلاب بأعلى معايير الأمان">
+    <meta name="twitter:image" content="https://studentmail.github.io/images/og-image.png">
+    <meta name="twitter:creator" content="@chouba_dev">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://studentmail.github.io">
+
+    <!-- Alternate Languages -->
+    <link rel="alternate" hreflang="ar" href="https://studentmail.github.io/?lang=ar">
+    <link rel="alternate" hreflang="en" href="https://studentmail.github.io/?lang=en">
+    <link rel="alternate" hreflang="x-default" href="https://studentmail.github.io">
+
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://api.mail.tm">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://apilist.tronscanapi.com">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Student Mail",
+        "description": "بريد مؤقت ودائم للطلاب بأعلى معايير الأمان",
+        "url": "https://studentmail.github.io",
+        "applicationCategory": "EmailApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "CHOUBA",
+            "email": "capago.monitor.dz@gmail.com"
+        },
+        "inLanguage": ["ar", "en"],
+        "availableLanguage": [
+            {"@type": "Language", "name": "Arabic"},
+            {"@type": "Language", "name": "English"}
+        ],
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "reviewCount": "5000"
+        }
+    }
+    </script>
+
+    <title>Student Mail - بريد مؤقت ودائم للطلاب | Temporary Email for Students</title>
+
+    <style>
+        :root {
+            --deep-ocean: #0A0E13;
+            --midnight-navy: #1A2332;
+            --slate-gray: #2D3748;
+            --cyan-bright: #82CFE2;
+            --mint-green: #10B981;
+            --mint-light: #A8E6CF;
+            --white: #FFFFFF;
+            --bright-neutral: #C5D0DE;
+            --error-red: #EF4444;
+            --warning-orange: #F59E0B;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+        body {
+            font-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--deep-ocean);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--deep-ocean); }
+        ::-webkit-scrollbar-thumb { background: var(--slate-gray); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--cyan-bright); }
+        ::selection { background: var(--cyan-bright); color: var(--deep-ocean); }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .hidden { display: none !important; }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(10, 14, 19, 0.95); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--slate-gray); height: 72px;
+            display: flex; align-items: center;
+        }
+        .navbar .container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--white); }
+        .logo-icon { width: 40px; height: 40px; background: var(--mint-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.4); } 50% { box-shadow: 0 0 0 10px rgba(16,185,129,0); } }
+        .logo-text { font-size: 24px; font-weight: 800; }
+        .logo-text span { color: var(--cyan-bright); }
+        .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+        .nav-links a { color: var(--white); text-decoration: none; font-size: 16px; font-weight: 400; transition: color 0.3s ease; position: relative; padding: 8px 0; }
+        .nav-links a:hover { color: var(--cyan-bright); }
+        .nav-links a::after { content: ''; position: absolute; bottom: 0; right: 0; width: 0; height: 2px; background: var(--cyan-bright); transition: width 0.3s ease; }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-actions { display: flex; align-items: center; gap: 16px; }
+        .btn-lang { background: rgba(255,255,255,0.1); border: 1px solid var(--slate-gray); color: var(--white); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 14px; font-weight: 600; transition: all 0.3s ease; }
+        .btn-lang:hover { background: var(--cyan-bright); color: var(--deep-ocean); }
+        .btn-developer { background: var(--mint-green); color: var(--white); padding: 8px 20px; border-radius: 50px 0px 0px 50px; text-decoration: none; font-size: 14px; font-weight: 600; transition: all 0.3s ease; border: none; cursor: pointer; font-family: 'Cairo', sans-serif; }
+        .btn-developer:hover { background: var(--mint-light); }
+        .mobile-menu-btn { display: none; background: none; border: none; color: var(--white); font-size: 24px; cursor: pointer; }
+
+        /* ===== HERO ===== */
+        .hero { padding: 140px 0 80px; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: -50%; right: -20%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(130,207,226,0.08) 0%, transparent 70%); pointer-events: none; }
+        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+        .hero-content h1 { font-size: 44.8px; font-weight: 800; line-height: 1.3; margin-bottom: 24px; }
+        .hero-content h1 .highlight { color: var(--cyan-bright); }
+        .hero-content p { font-size: 19.2px; font-weight: 400; color: var(--bright-neutral); line-height: 1.7; margin-bottom: 40px; }
+        .hero-stats { display: flex; gap: 40px; margin-bottom: 40px; }
+        .stat-item { text-align: center; }
+        .stat-number { font-size: 32px; font-weight: 800; color: var(--mint-green); display: block; }
+        .stat-label { font-size: 14px; color: var(--bright-neutral); font-weight: 500; }
+        .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+        .btn-primary { background: var(--mint-green); color: var(--white); font-size: 16px; font-weight: 600; padding: 16px 32px; border-radius: 50px 0px 0px 50px; border: none; cursor: pointer; font-family: 'Cairo', sans-serif; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; height: 58px; }
+        .btn-primary:hover { background: var(--mint-light); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(16,185,129,0.3); }
+        .btn-secondary { background: transparent; color: var(--white); font-size: 16px; font-weight: 600; padding: 16px 32px; border-radius: 8px; border: 2px solid var(--slate-gray); cursor: pointer; font-family: 'Cairo', sans-serif; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; height: 58px; }
+        .btn-secondary:hover { border-color: var(--cyan-bright); color: var(--cyan-bright); }
+        .btn-full { width: 100%; justify-content: center; border-radius: 50px 0px 0px 50px; }
+        .btn-icon { width: 36px; height: 36px; background: rgba(255,255,255,0.2); border: none; border-radius: 50%; color: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; flex-shrink: 0; }
+        .btn-icon:hover { background: rgba(255,255,255,0.35); }
+        .btn-refresh { background: rgba(130,207,226,0.1); color: var(--cyan-bright); border: 1px solid var(--cyan-bright); padding: 12px; border-radius: 8px; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 14px; font-weight: 600; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-refresh:hover { background: var(--cyan-bright); color: var(--deep-ocean); }
+        .btn-refresh.spinning i { animation: spin 1s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .hero-visual { position: relative; }
+        .hero-card { background: var(--midnight-navy); border: 1px solid var(--slate-gray); border-radius: 20px; padding: 32px; box-shadow: rgba(0,0,0,0.4) 0px 25px 80px 0px, rgba(130,207,226,0.1) 0px 0px 0px 1px; position: relative; }
+        .hero-card::before { content: ''; position: absolute; top: -2px; right: -2px; left: -2px; bottom: -2px; background: linear-gradient(135deg, var(--cyan-bright), transparent 40%); border-radius: 22px; z-index: -1; opacity: 0.3; }
+        .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--slate-gray); }
+        .card-avatar { width: 48px; height: 48px; background: var(--mint-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+        .card-info h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+        .card-info p { font-size: 12px; color: var(--bright-neutral); margin: 0; }
+        .email-display { background: rgba(255,255,255,0.05); border: 1px solid var(--slate-gray); border-radius: 8px; padding: 16px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+        .email-text { font-size: 14px; color: var(--white); font-weight: 600; direction: ltr; text-align: left; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+        /* ===== INBOX ===== */
+        .inbox-section { padding: 80px 0; display: none; }
+        .inbox-section.active { display: block; }
+        .section-header { text-align: center; margin-bottom: 48px; }
+        .section-header h2 { font-size: 32px; font-weight: 800; margin-bottom: 16px; }
+        .section-header p { font-size: 16px; color: var(--bright-neutral); }
+        .inbox-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; }
+        .inbox-sidebar { background: var(--midnight-navy); border: 1px solid var(--slate-gray); border-radius: 20px; padding: 24px; box-shadow: rgba(0,0,0,0.4) 0px 25px 80px 0px; height: fit-content; }
+        .domain-selector { margin-bottom: 20px; }
+        .domain-selector label { display: block; font-size: 14px; color: var(--bright-neutral); margin-bottom: 8px; font-weight: 400; }
+        .domain-select { width: 100%; background: var(--deep-ocean); border: 2px solid var(--slate-gray); border-radius: 8px; padding: 12px 16px; color: var(--white); font-family: 'Cairo', sans-serif; font-size: 14px; cursor: pointer; outline: none; transition: all 0.3s ease; }
+        .domain-select:focus { border-color: var(--cyan-bright); }
+        .domain-select option { background: var(--deep-ocean); color: var(--white); }
+        .domain-badge { display: inline-block; background: rgba(16,185,129,0.15); color: var(--mint-green); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-right: 8px; }
+        .inbox-email-box { background: rgba(255,255,255,0.05); border: 2px solid var(--slate-gray); border-radius: 8px; padding: 16px; margin-bottom: 20px; }
+        .inbox-email-box:focus-within { border-color: var(--cyan-bright); background: rgba(255,255,255,0.08); }
+        .inbox-email-box label { display: block; font-size: 14px; color: var(--bright-neutral); margin-bottom: 8px; font-weight: 400; }
+        .email-input-group { display: flex; gap: 8px; align-items: center; }
+        .email-input { flex: 1; background: transparent; border: none; color: var(--white); font-size: 14px; font-family: 'Cairo', sans-serif; direction: ltr; outline: none; }
+        .email-input::placeholder { color: rgba(197,208,222,0.6); }
+        .inbox-actions { display: flex; flex-direction: column; gap: 12px; }
+        .inbox-timer { text-align: center; padding: 16px; background: rgba(16,185,129,0.1); border-radius: 12px; margin-top: 16px; }
+        .inbox-timer i { color: var(--mint-green); font-size: 24px; margin-bottom: 8px; }
+        .inbox-timer p { font-size: 14px; color: var(--bright-neutral); margin: 0; }
+        .timer-text { color: var(--mint-green); font-weight: 700; }
+        .inbox-main { background: var(--midnight-navy); border: 1px solid var(--slate-gray); border-radius: 20px; padding: 24px; box-shadow: rgba(0,0,0,0.4) 0px 25px 80px 0px; min-height: 500px; }
+        .inbox-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--slate-gray); }
+        .inbox-title { font-size: 19.2px; font-weight: 700; }
+        .inbox-count { background: var(--mint-green); color: var(--white); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+        .messages-container { display: flex; flex-direction: column; gap: 8px; }
+        .message-row { background: rgba(255,255,255,0.03); border: 1px solid transparent; border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 16px; cursor: pointer; transition: all 0.3s ease; }
+        .message-row:hover { background: rgba(255,255,255,0.06); border-color: var(--slate-gray); }
+        .message-row.unread { border-right: 3px solid var(--cyan-bright); }
+        .message-avatar { width: 44px; height: 44px; background: linear-gradient(135deg, var(--cyan-bright), var(--mint-green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--deep-ocean); font-weight: 700; flex-shrink: 0; }
+        .message-content { flex: 1; min-width: 0; }
+        .message-content h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .message-content p { font-size: 13px; color: var(--bright-neutral); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .message-meta { text-align: left; flex-shrink: 0; }
+        .message-meta .time { font-size: 12px; color: var(--bright-neutral); display: block; }
+        .empty-state { text-align: center; padding: 80px 20px; }
+        .empty-state i { font-size: 64px; color: var(--slate-gray); margin-bottom: 24px; }
+        .empty-state h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+        .empty-state p { font-size: 14px; color: var(--bright-neutral); }
+
+        /* ===== SERVICES ===== */
+        .services-section { padding: 80px 0; background: linear-gradient(180deg, var(--deep-ocean) 0%, rgba(26,35,50,0.5) 50%, var(--deep-ocean) 100%); }
+        .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .service-card { background: var(--midnight-navy); border: 1px solid var(--slate-gray); border-radius: 20px; padding: 32px; transition: all 0.4s ease; position: relative; overflow: hidden; }
+        .service-card::before { content: ''; position: absolute; top: 0; right: 0; width: 100%; height: 3px; background: linear-gradient(90deg, var(--cyan-bright), var(--mint-green)); transform: scaleX(0); transform-origin: right; transition: transform 0.4s ease; }
+        .service-card:hover::before { transform: scaleX(1); }
+        .service-card:hover { transform: translateY(-8px); box-shadow: rgba(0,0,0,0.4) 0px 25px 80px 0px, rgba(130,207,226,0.1) 0px 0px 0px 1px; border-color: var(--cyan-bright); }
+        .service-icon { width: 60px; height: 60px; background: rgba(130,207,226,0.1); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--cyan-bright); margin-bottom: 20px; transition: all 0.3s ease; }
+        .service-card:hover .service-icon { background: var(--cyan-bright); color: var(--deep-ocean); }
+        .service-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+        .service-card p { font-size: 14px; color: var(--bright-neutral); line-height: 1.7; margin-bottom: 20px; }
+        .service-features { list-style: none; }
+        .service-features li { font-size: 13px; color: var(--bright-neutral); padding: 6px 0; display: flex; align-items: center; gap: 8px; }
+        .service-features li i { color: var(--mint-green); font-size: 12px; }
+
+        /* ===== PRICING ===== */
+        .pricing-section { padding: 80px 0; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 900px; margin: 0 auto; }
+        .pricing-card { background: var(--midnight-navy); border: 1px solid var(--slate-gray); border-radius: 20px; padding: 40px 32px; text-align: center; transition: all 0.4s ease; position: relative; }
+        .pricing-card.featured { border-color: var(--mint-green); box-shadow: 0 0 40px rgba(16,185,129,0.15); }
+        .pricing-card.featured::before { content: attr(data-label); position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--mint-green); color: var(--white); padding: 6px 20px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+        .pricing-card:hover { transform: translateY(-4px); box-shadow: rgba(0,0,0,0.4) 0px 25px 80px 0px; }
+        .pricing-icon { width: 80px; height: 80px; background: rgba(130,207,226,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; color: var(--cyan-bright); margin: 0 auto 24px; }
+        .pricing-card h3 { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
+        .pricing-card .price { font-size: 48px; font-weight: 800; color: var(--mint-green); margin: 16px 0; }
+        .pricing-card .price span { font-size: 16px; color: var(--bright-neutral); font-weight: 400; }
+        .pricing-features { list-style: none; text-align: right; margin: 24px 0; }
+        .pricing-features li { font-size: 14px; color: var(--bright-neutral); padding: 10px 0; border-bottom: 1px solid rgba(45,55,72,0.5); display: flex; align-items: center; gap: 10px; }
+        .pricing-features li:last-child { border-bottom: none; }
+        .pricing-features li i { color: var(--mint-green); }
+        .pricing-features li i.fa-times { color: var(--error-red); }
+        .premium-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(245,158,11,0.15); border: 1px solid var(--warning-orange); color: var(--warning-orange); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-bottom: 12px; }
+        .premium-badge.active { background: rgba(16,185,129,0.15); border-color: var(--mint-green); color: var(--mint-green); }
+
+        /* ===== WALLET ===== */
+        .wallet-section { padding: 60px 0; background: var(--midnight-navy); border-top: 1px solid var(--slate-gray); border-bottom: 1px solid var(--slate-gray); }
+        .wallet-box { background: var(--deep-ocean); border: 2px solid var(--slate-gray); border-radius: 16px; padding: 32px; max-width: 700px; margin: 0 auto; text-align: center; }
+        .wallet-box h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+        .wallet-box p { font-size: 14px; color: var(--bright-neutral); margin-bottom: 20px; }
+        .wallet-address { background: rgba(255,255,255,0.05); border: 2px solid var(--slate-gray); border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .wallet-address:focus-within { border-color: var(--cyan-bright); }
+        .wallet-address input { flex: 1; background: transparent; border: none; color: var(--cyan-bright); font-size: 14px; font-family: 'Cairo', monospace; direction: ltr; text-align: center; outline: none; }
+        .wallet-label { font-size: 12px; color: var(--bright-neutral); margin-top: 8px; }
+        .payment-verify { background: rgba(255,255,255,0.03); border: 1px solid var(--slate-gray); border-radius: 12px; padding: 20px; margin-top: 20px; text-align: center; }
+        .payment-verify h4 { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+        .payment-verify p { font-size: 13px; color: var(--bright-neutral); margin-bottom: 16px; }
+        .txid-input { width: 100%; background: var(--deep-ocean); border: 2px solid var(--slate-gray); border-radius: 8px; padding: 12px 16px; color: var(--white); font-family: 'Cairo', monospace; font-size: 13px; direction: ltr; text-align: center; outline: none; margin-bottom: 12px; transition: all 0.3s ease; }
+        .txid-input:focus { border-color: var(--cyan-bright); }
+        .txid-input::placeholder { color: rgba(197,208,222,0.5); }
+        .verify-status { margin-top: 12px; padding: 12px; border-radius: 8px; font-size: 13px; font-weight: 600; display: none; }
+        .verify-status.success { background: rgba(16,185,129,0.15); color: var(--mint-green); border: 1px solid var(--mint-green); display: block; }
+        .verify-status.error { background: rgba(239,68,68,0.15); color: var(--error-red); border: 1px solid var(--error-red); display: block; }
+        .verify-status.pending { background: rgba(245,158,11,0.15); color: var(--warning-orange); border: 1px solid var(--warning-orange); display: block; }
+
+        /* ===== CONTACT ===== */
+        .contact-section { padding: 80px 0; }
+        .contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 800px; margin: 0 auto; }
+        .contact-card { background: var(--midnight-navy); border: 1px solid var(--slate-gray); border-radius: 20px; padding: 32px; text-align: center; transition: all 0.3s ease; }
+        .contact-card:hover { border-color: var(--cyan-bright); transform: translateY(-4px); }
+        .contact-icon { width: 60px; height: 60px; background: rgba(130,207,226,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--cyan-bright); margin: 0 auto 16px; }
+        .contact-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+        .contact-card p { font-size: 14px; color: var(--bright-neutral); margin-bottom: 16px; }
+        .contact-card a { color: var(--cyan-bright); text-decoration: none; font-size: 14px; font-weight: 600; transition: color 0.3s ease; }
+        .contact-card a:hover { color: var(--mint-green); }
+        .developer-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(16,185,129,0.1); border: 1px solid var(--mint-green); padding: 8px 20px; border-radius: 50px; font-size: 14px; color: var(--mint-green); font-weight: 600; }
+        .developer-badge i { font-size: 16px; }
+
+        /* ===== FOOTER ===== */
+        .footer { background: var(--midnight-navy); border-top: 1px solid var(--slate-gray); padding: 40px 0; text-align: center; }
+        .footer-content { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+        .footer-logo { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 800; }
+        .footer-logo span { color: var(--cyan-bright); }
+        .footer p { font-size: 14px; color: var(--bright-neutral); }
+        .footer-links { display: flex; gap: 24px; list-style: none; flex-wrap: wrap; justify-content: center; }
+        .footer-links a { color: var(--bright-neutral); text-decoration: none; font-size: 14px; transition: color 0.3s ease; }
+        .footer-links a:hover { color: var(--cyan-bright); }
+        .footer-bottom { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--slate-gray); font-size: 12px; color: var(--bright-neutral); }
+
+        /* ===== TOAST ===== */
+        .toast { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--midnight-navy); border: 1px solid var(--mint-green); color: var(--white); padding: 16px 32px; border-radius: 12px; font-size: 14px; font-weight: 600; z-index: 3000; opacity: 0; transition: all 0.4s ease; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .toast.error { border-color: var(--error-red); }
+        .toast.warning { border-color: var(--warning-orange); }
+        .toast.info { border-color: var(--cyan-bright); }
+
+        /* ===== LOADING ===== */
+        .loading-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10,14,19,0.95); z-index: 2500; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 20px; backdrop-filter: blur(10px); }
+        .loading-overlay.active { display: flex; }
+        .spinner { width: 50px; height: 50px; border: 3px solid var(--slate-gray); border-top-color: var(--cyan-bright); border-radius: 50%; animation: spin 1s linear infinite; }
+
+        /* ===== MODAL ===== */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 24px; backdrop-filter: blur(10px); }
+        .modal-overlay.active { display: flex; }
+        .modal-content { background: var(--midnight-navy); border: 1px solid var(--slate-gray); border-radius: 20px; width: 100%; max-width: 700px; max-height: 90vh; overflow: hidden; box-shadow: rgba(0,0,0,0.5) 0px 20px 60px 0px; display: flex; flex-direction: column; }
+        .modal-header { padding: 24px; border-bottom: 1px solid var(--slate-gray); display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h3 { font-size: 18px; font-weight: 700; }
+        .modal-close { background: none; border: none; color: var(--bright-neutral); font-size: 24px; cursor: pointer; transition: color 0.3s ease; }
+        .modal-close:hover { color: var(--error-red); }
+        .modal-body { padding: 24px; overflow-y: auto; flex: 1; }
+        .modal-info { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; margin-bottom: 20px; font-size: 14px; }
+        .modal-info dt { color: var(--bright-neutral); font-weight: 600; }
+        .modal-info dd { color: var(--white); margin: 0; }
+        .modal-body .email-body { background: rgba(255,255,255,0.05); border-radius: 8px; padding: 20px; font-size: 14px; line-height: 1.8; color: var(--white); white-space: pre-wrap; word-wrap: break-word; max-height: 400px; overflow-y: auto; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .container { padding: 0 16px; }
+            .nav-links { display: none; position: absolute; top: 72px; left: 0; right: 0; background: var(--deep-ocean); flex-direction: column; padding: 24px; border-bottom: 1px solid var(--slate-gray); z-index: 999; }
+            .nav-links.active { display: flex; }
+            .mobile-menu-btn { display: block; }
+            .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+            .hero-content h1 { font-size: 28px; }
+            .hero-content p { font-size: 16px; }
+            .hero-stats { gap: 24px; }
+            .inbox-grid { grid-template-columns: 1fr; }
+            .services-grid { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .section-header h2 { font-size: 24px; }
+        }
+        @media (max-width: 480px) {
+            .hero-content h1 { font-size: 24px; }
+            .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+            .hero-actions { flex-direction: column; }
+            .wallet-address { flex-direction: column; gap: 8px; }
+            .wallet-address input { font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p id="loadingText">جاري التحميل...</p>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">تم النسخ!</span>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                <div class="logo-icon"><i class="fas fa-envelope"></i></div>
+                <div class="logo-text">Student <span>Mail</span></div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#inbox" data-ar="صندوق البريد" data-en="Inbox">صندوق البريد</a></li>
+                <li><a href="#services" data-ar="الخدمات" data-en="Services">الخدمات</a></li>
+                <li><a href="#pricing" data-ar="الأسعار" data-en="Pricing">الأسعار</a></li>
+                <li><a href="#contact" data-ar="التواصل" data-en="Contact">التواصل</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="btn-lang" id="langBtn" onclick="toggleLanguage()">EN</button>
+                <a href="#" class="btn-developer" data-ar="CHOUBA" data-en="CHOUBA">CHOUBA</a>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Menu"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <h1 data-ar="بريد <span class=\"highlight\">مؤقت ودائم</span> للطلاب" data-en="<span class=\"highlight\">Temporary & Permanent</span> Mail for Students">
+                        بريد <span class="highlight">مؤقت ودائم</span> للطلاب
+                    </h1>
+                    <p data-ar="احصل على بريد إلكتروني مؤقت للتسجيل في المواقع والمنصات بأمان، أو بريد دائم مخصص للطلاب بمزايا احترافية." data-en="Get a temporary email to register on websites and platforms safely, or a permanent email dedicated to students with professional features.">
+                        احصل على بريد إلكتروني مؤقت للتسجيل في المواقع والمنصات بأمان، أو بريد دائم مخصص للطلاب بمزايا احترافية.
+                    </p>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">15+</span>
+                            <span class="stat-label" data-ar="سنة خبرة" data-en="Years Exp">سنة خبرة</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">5000+</span>
+                            <span class="stat-label" data-ar="عميل سعيد" data-en="Happy Clients">عميل سعيد</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">99.9%</span>
+                            <span class="stat-label" data-ar="وقت تشغيل" data-en="Uptime">وقت تشغيل</span>
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <button class="btn-primary" onclick="createTempEmail()">
+                            <i class="fas fa-plus"></i>
+                            <span data-ar="إنشاء بريد مؤقت" data-en="Create Temp Email">إنشاء بريد مؤقت</span>
+                        </button>
+                        <a href="#pricing" class="btn-secondary">
+                            <i class="fas fa-crown"></i>
+                            <span data-ar="البريد المدفوع" data-en="Premium Mail">البريد المدفوع</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-card">
+                        <div class="card-header">
+                            <div class="card-avatar"><i class="fas fa-user-graduate"></i></div>
+                            <div class="card-info">
+                                <h3 data-ar="بريد الطالب" data-en="Student Mail">بريد الطالب</h3>
+                                <p data-ar="نشط الآن" data-en="Active now">نشط الآن</p>
+                            </div>
+                        </div>
+                        <div class="email-display">
+                            <span class="email-text" id="heroEmail">student@example.com</span>
+                            <button class="btn-icon" onclick="copyEmail()" title="Copy" aria-label="Copy email">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="message-list" id="heroMessages">
+                            <div class="message-item">
+                                <div class="message-sender"><i class="fas fa-bell"></i></div>
+                                <div class="message-preview">
+                                    <h4 data-ar="مرحباً بك في Student Mail!" data-en="Welcome to Student Mail!">مرحباً بك في Student Mail!</h4>
+                                    <p data-ar="اختر نطاق @edu وانقر لإنشاء بريدك" data-en="Choose @edu domain and click to create your email">اختر نطاق @edu وانقر لإنشاء بريدك</p>
+                                </div>
+                                <span class="message-time">الآن</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inbox -->
+    <section class="inbox-section" id="inbox">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-ar="صندوق البريد" data-en="Inbox">صندوق البريد</h2>
+                <p data-ar="إدارة بريدك المؤقت وقراءة الرسائل الواردة" data-en="Manage your temporary email and read incoming messages">إدارة بريدك المؤقت وقراءة الرسائل الواردة</p>
+            </div>
+            <div class="inbox-grid">
+                <div class="inbox-sidebar">
+                    <div class="domain-selector">
+                        <label data-ar="اختر النطاق (@edu متاح)" data-en="Select Domain (@edu available)">اختر النطاق (@edu متاح)</label>
+                        <select class="domain-select" id="domainSelect" onchange="onDomainChange()">
+                            <option value="" data-ar="جاري تحميل النطاقات..." data-en="Loading domains...">جاري تحميل النطاقات...</option>
+                        </select>
+                        <div class="domain-loading" id="domainLoading" style="display:none;">
+                            <i class="fas fa-spinner"></i>
+                            <span data-ar="جاري تحديث النطاقات..." data-en="Updating domains...">جاري تحديث النطاقات...</span>
+                        </div>
+                    </div>
+                    <div class="inbox-email-box">
+                        <label data-ar="عنوان البريد" data-en="Email Address">عنوان البريد</label>
+                        <div class="email-input-group">
+                            <input type="text" class="email-input" id="inboxEmail" readonly value="" aria-label="Email address">
+                            <button class="btn-icon" onclick="copyInboxEmail()" title="Copy" aria-label="Copy email">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="inbox-actions">
+                        <button class="btn-primary btn-full" onclick="createNewEmail()">
+                            <i class="fas fa-plus"></i>
+                            <span data-ar="بريد جديد" data-en="New Email">بريد جديد</span>
+                        </button>
+                        <button class="btn-refresh" id="refreshBtn" onclick="refreshInbox()">
+                            <i class="fas fa-sync-alt"></i>
+                            <span data-ar="تحديث" data-en="Refresh">تحديث</span>
+                        </button>
+                    </div>
+                    <div class="inbox-timer">
+                        <i class="fas fa-clock"></i>
+                        <p data-ar="مدة صلاحية البريد:" data-en="Email expires in:">مدة صلاحية البريد:</p>
+                        <p class="timer-text" id="timer">60:00</p>
+                    </div>
+                </div>
+                <div class="inbox-main">
+                    <div class="inbox-toolbar">
+                        <h3 class="inbox-title" data-ar="الرسائل الواردة" data-en="Incoming Messages">الرسائل الواردة</h3>
+                        <span class="inbox-count" id="msgCount">0</span>
+                    </div>
+                    <div class="messages-container" id="messagesContainer">
+                        <div class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <h3 data-ar="لا توجد رسائل" data-en="No messages">لا توجد رسائل</h3>
+                            <p data-ar="سيتم عرض الرسائل الواردة هنا تلقائياً" data-en="Incoming messages will appear here automatically">سيتم عرض الرسائل الواردة هنا تلقائياً</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="services-section" id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-ar="خدماتنا" data-en="Our Services">خدماتنا</h2>
+                <p data-ar="حلول بريدية متكاملة مصممة خصيصاً لاحتياجات الطلاب" data-en="Comprehensive email solutions designed specifically for students' needs">حلول بريدية متكاملة مصممة خصيصاً لاحتياجات الطلاب</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-clock"></i></div>
+                    <h3 data-ar="بريد مؤقت" data-en="Temporary Email">بريد مؤقت</h3>
+                    <p data-ar="أنشئ بريداً إلكترونياً مؤقتاً للتسجيل في المواقع والمنصات دون الكشف عن بريدك الشخصي." data-en="Create a temporary email to register on websites and platforms without revealing your personal email.">أنشئ بريداً إلكترونياً مؤقتاً للتسجيل في المواقع والمنصات دون الكشف عن بريدك الشخصي.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> <span data-ar="توليد فوري" data-en="Instant generation">توليد فوري</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="بدون تسجيل" data-en="No registration">بدون تسجيل</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="حماية الخصوصية" data-en="Privacy protection">حماية الخصوصية</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="استلام رسائل فوري" data-en="Instant message reception">استلام رسائل فوري</span></li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3 data-ar="بريد دائم للطلاب" data-en="Permanent Student Email">بريد دائم للطلاب</h3>
+                    <p data-ar="بريد إلكتروني دائم مخصص للطلاب باسم نطاق احترافي. استخدمه للتواصل الأكاديمي." data-en="A permanent email dedicated to students with a professional domain name. Use it for academic communication.">بريد إلكتروني دائم مخصص للطلاب باسم نطاق احترافي. استخدمه للتواصل الأكاديمي.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> <span data-ar="عنوان دائم" data-en="Permanent address">عنوان دائم</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="نطاق @edu" data-en="@edu domain">نطاق @edu</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="دعم فني" data-en="Technical support">دعم فني</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="تكامل مع Google" data-en="Google integration">تكامل مع Google</span></li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-crown"></i></div>
+                    <h3 data-ar="بريد مدفوع" data-en="Premium Email">بريد مدفوع</h3>
+                    <p data-ar="بريد إلكتروني مدفوع بمزايا إضافية: تخزين كبير، أمان متقدم، دعم 24/7." data-en="Premium email with additional features: large storage, advanced security, 24/7 support.">بريد إلكتروني مدفوع بمزايا إضافية: تخزين كبير، أمان متقدم، دعم 24/7.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> <span data-ar="تخزين 50GB" data-en="50GB storage">تخزين 50GB</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="أمان SSL/TLS" data-en="SSL/TLS security">أمان SSL/TLS</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="دعم على مدار الساعة" data-en="24/7 support">دعم على مدار الساعة</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="عناوين متعددة" data-en="Multiple addresses">عناوين متعددة</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing-section" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-ar="خطط الأسعار" data-en="Pricing Plans">خطط الأسعار</h2>
+                <p data-ar="اختر الخطة المناسبة لاحتياجاتك" data-en="Choose the plan that fits your needs">اختر الخطة المناسبة لاحتياجاتك</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-icon"><i class="fas fa-envelope-open"></i></div>
+                    <h3 data-ar="البريد المؤقت" data-en="Temporary Mail">البريد المؤقت</h3>
+                    <div class="price" data-ar="مجاني" data-en="Free">مجاني</div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-ar="بريد مؤقت لمدة ساعة" data-en="1-hour temporary email">بريد مؤقت لمدة ساعة</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="استلام رسائل فوري" data-en="Instant message reception">استلام رسائل فوري</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="بدون تسجيل" data-en="No registration">بدون تسجيل</span></li>
+                        <li><i class="fas fa-times"></i> <span data-ar="بدون دعم فني" data-en="No technical support">بدون دعم فني</span></li>
+                        <li><i class="fas fa-times"></i> <span data-ar="بدون تخزين دائم" data-en="No permanent storage">بدون تخزين دائم</span></li>
+                    </ul>
+                    <button class="btn-primary btn-full" onclick="createTempEmail()">
+                        <span data-ar="ابدأ الآن" data-en="Start Now">ابدأ الآن</span>
+                    </button>
+                </div>
+                <div class="pricing-card featured" data-label="موصى به">
+                    <div class="premium-badge" id="premiumBadge">
+                        <i class="fas fa-lock"></i>
+                        <span data-ar="غير مفعل" data-en="Inactive">غير مفعل</span>
+                    </div>
+                    <div class="pricing-icon"><i class="fas fa-crown"></i></div>
+                    <h3 data-ar="البريد المدفوع" data-en="Premium Mail">البريد المدفوع</h3>
+                    <div class="price">$5 <span data-ar="/ شهر" data-en="/ month">/ شهر</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-ar="بريد دائم مدى الحياة" data-en="Lifetime permanent email">بريد دائم مدى الحياة</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="تخزين 50GB" data-en="50GB storage">تخزين 50GB</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="أمان متقدم" data-en="Advanced security">أمان متقدم</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="دعم فني 24/7" data-en="24/7 technical support">دعم فني 24/7</span></li>
+                        <li><i class="fas fa-check"></i> <span data-ar="عناوين بريدية متعددة" data-en="Multiple email addresses">عناوين بريدية متعددة</span></li>
+                    </ul>
+                    <button class="btn-primary btn-full" onclick="scrollToWallet()">
+                        <span data-ar="اشترك الآن" data-en="Subscribe Now">اشترك الآن</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wallet -->
+    <section class="wallet-section" id="wallet">
+        <div class="container">
+            <div class="wallet-box">
+                <h3 data-ar="الدفع عبر Binance" data-en="Payment via Binance">الدفع عبر Binance</h3>
+                <p data-ar="يمكنك الاشتراك في البريد المدفوع عبر تحويل USDT على شبكة TRC20" data-en="You can subscribe to premium mail by transferring USDT on TRC20 network">يمكنك الاشتراك في البريد المدفوع عبر تحويل USDT على شبكة TRC20</p>
+                <div class="wallet-address">
+                    <input type="text" id="walletInput" value="TTrYhS7Y8t1bqJEPST2DaGrAH3oKUni6YN" readonly aria-label="Wallet address">
+                    <button class="btn-icon" onclick="copyWallet()" title="Copy" aria-label="Copy wallet address">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+                <p class="wallet-label">USDT TRC20 - Binance | المبلغ المطلوب: <strong>$5.00</strong></p>
+                <div class="payment-verify" id="paymentVerify">
+                    <h4 data-ar="تفعيل الاشتراك تلقائياً" data-en="Auto-Activate Subscription">تفعيل الاشتراك تلقائياً</h4>
+                    <p data-ar="بعد إتمام التحويل، أدخل معرف المعاملة (TXID) هنا للتحقق والتفعيل الفوري" data-en="After completing the transfer, enter the Transaction ID (TXID) here for instant verification and activation">بعد إتمام التحويل، أدخل معرف المعاملة (TXID) هنا للتحقق والتفعيل الفوري</p>
+                    <input type="text" class="txid-input" id="txidInput" placeholder="TXID - مثال: a1b2c3d4e5f6..." maxlength="64" autocomplete="off">
+                    <button class="btn-primary btn-full" onclick="verifyPayment()" id="verifyBtn">
+                        <i class="fas fa-shield-alt"></i>
+                        <span data-ar="التحقق والتفعيل" data-en="Verify & Activate">التحقق والتفعيل</span>
+                    </button>
+                    <div class="verify-status" id="verifyStatus"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</h2>
+                <p data-ar="نحن هنا لمساعدتك في أي وقت" data-en="We are here to help you anytime">نحن هنا لمساعدتك في أي وقت</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                    <h3 data-ar="البريد الإلكتروني" data-en="Email">البريد الإلكتروني</h3>
+                    <p data-ar="راسلنا على بريدنا الرسمي" data-en="Message us on our official email">راسلنا على بريدنا الرسمي</p>
+                    <a href="mailto:capago.monitor.dz@gmail.com">capago.monitor.dz@gmail.com</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon"><i class="fas fa-code"></i></div>
+                    <h3 data-ar="المطور" data-en="Developer">المطور</h3>
+                    <p data-ar="تم التطوير بواسطة" data-en="Developed by">تم التطوير بواسطة</p>
+                    <div class="developer-badge">
+                        <i class="fas fa-user"></i> CHOUBA
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-envelope" style="color: var(--mint-green);"></i>
+                    Student <span>Mail</span>
+                </div>
+                <ul class="footer-links">
+                    <li><a href="#services" data-ar="الخدمات" data-en="Services">الخدمات</a></li>
+                    <li><a href="#pricing" data-ar="الأسعار" data-en="Pricing">الأسعار</a></li>
+                    <li><a href="#contact" data-ar="التواصل" data-en="Contact">التواصل</a></li>
+                    <li><a href="#wallet" data-ar="الدفع" data-en="Payment">الدفع</a></li>
+                </ul>
+                <p data-ar="جميع الحقوق محفوظة © 2026 Student Mail" data-en="All rights reserved © 2026 Student Mail">جميع الحقوق محفوظة © 2026 Student Mail</p>
+                <div class="footer-bottom">
+                    <span data-ar="تصميم وتطوير CHOUBA" data-en="Designed & Developed by CHOUBA">تصميم وتطوير CHOUBA</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Message Modal -->
+    <div class="modal-overlay" id="messageModal" role="dialog" aria-modal="true" aria-labelledby="modalSubject">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalSubject">موضوع الرسالة</h3>
+                <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <dl class="modal-info">
+                    <dt data-ar="المرسل:" data-en="From:">المرسل:</dt>
+                    <dd id="modalFrom">---</dd>
+                    <dt data-ar="التاريخ:" data-en="Date:">التاريخ:</dt>
+                    <dd id="modalDate">---</dd>
+                </dl>
+                <div class="email-body" id="modalBody">---</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== CONFIG =====
+        const CONFIG = {
+            WALLET_ADDRESS: 'TTrYhS7Y8t1bqJEPST2DaGrAH3oKUni6YN',
+            PREMIUM_PRICE: 5,
+            USDT_CONTRACT: 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
+            TRONSCAN_API: 'https://apilist.tronscanapi.com',
+            TRONGRID_API: 'https://api.trongrid.io',
+            // Multiple keyless, CORS-friendly temp-mail providers combined for more real domains.
+            // mail.tm and mail.gw share an identical API (just a different base URL).
+            // 1secmail has its own simpler GET-only API and needs no account/token.
+            PROVIDERS: {
+                mailtm:  { kind: 'mailtm',   base: 'https://api.mail.tm' },
+                mailgw:  { kind: 'mailtm',   base: 'https://api.mail.gw' },
+                secmail: { kind: '1secmail', base: 'https://www.1secmail.com/api/v1/' }
+            }
+        };
+
+        // ===== STATE =====
+        let currentLang = 'ar';
+        let currentEmail = null, currentDomain = null, emailUsername = null;
+        let emailToken = null, emailPassword = null, emailProvider = null;
+        let domains = [], messages = [], domainProviderMap = {};
+        let pollInterval = null, timerInterval = null;
+        let timeLeft = 3600, isPremium = false;
+
+        // ===== SECURITY =====
+        const Security = {
+            rateLimit: { attempts: {}, check(key, max=5, window=60000) {
+                const now = Date.now();
+                if (!this.attempts[key]) this.attempts[key] = {count:0, first:now};
+                if (now - this.attempts[key].first > window) this.attempts[key] = {count:0, first:now};
+                this.attempts[key].count++;
+                return this.attempts[key].count <= max;
+            }},
+            sanitize(input) { return typeof input === 'string' ? input.replace(/[<>'"]/g, c=>({'<':'&lt;','>':'&gt;',"'":'&#x27;','"':'&quot;'}[c])) : ''; },
+            escapeHtml(t) { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; },
+            getFingerprint() {
+                const c=document.createElement('canvas'); const x=c.getContext('2d');
+                x.textBaseline='top'; x.font='14px Arial'; x.fillText('SM',2,2);
+                return btoa(c.toDataURL()).slice(0,32);
+            },
+            encrypt(data, key) { const t=JSON.stringify(data); let r=''; for(let i=0;i<t.length;i++)r+=String.fromCharCode(t.charCodeAt(i)^key.charCodeAt(i%key.length)); return btoa(r); },
+            decrypt(data, key) { try{const t=atob(data); let r=''; for(let i=0;i<t.length;i++)r+=String.fromCharCode(t.charCodeAt(i)^key.charCodeAt(i%key.length)); return JSON.parse(r);}catch(e){return null;} }
+        };
+
+        const ENCRYPTION_KEY = Security.getFingerprint();
+
+        // ===== TRANSLATIONS =====
+        const translations = {
+            ar: { copied:'تم النسخ!', emailCreated:'تم إنشاء البريد بنجاح!', refreshSuccess:'تم تحديث الرسائل', error:'حدث خطأ، حاول مرة أخرى', timerExpired:'انتهت صلاحية البريد', domainLoaded:'تم تحميل النطاقات', domainError:'فشل تحميل النطاقات', premiumActivated:'تم تفعيل الباقة المدفوعة! 🎉', premiumAlready:'الباقة مفعلة بالفعل', invalidTxid:'TXID غير صالح', verifyError:'فشل التحقق', enterTxid:'أدخل TXID أولاً', selectDomain:'اختر نطاقاً أولاً', rateLimit:'محاولات كثيرة، انتظر' },
+            en: { copied:'Copied!', emailCreated:'Email created successfully!', refreshSuccess:'Messages refreshed', error:'An error occurred', timerExpired:'Email expired', domainLoaded:'Domains loaded', domainError:'Failed to load domains', premiumActivated:'Premium activated! 🎉', premiumAlready:'Already active', invalidTxid:'Invalid TXID', verifyError:'Verification failed', enterTxid:'Enter TXID first', selectDomain:'Select a domain first', rateLimit:'Too many attempts, wait' }
+        };
+
+        // ===== UI FUNCTIONS =====
+        function showToast(message, type='success') {
+            const toast = document.getElementById('toast');
+            const icon = toast.querySelector('i');
+            document.getElementById('toastMessage').textContent = message;
+            toast.className = 'toast ' + type;
+            icon.className = type==='error'?'fas fa-exclamation-circle':type==='warning'?'fas fa-exclamation-triangle':type==='info'?'fas fa-info-circle':'fas fa-check-circle';
+            toast.classList.add('show');
+            setTimeout(()=>toast.classList.remove('show'), 4000);
+        }
+        function showLoading(show, text) { const o=document.getElementById('loadingOverlay'); if(text)document.getElementById('loadingText').textContent=text; o.classList.toggle('active',show); }
+        async function copyToClipboard(text) { try{await navigator.clipboard.writeText(text);showToast(translations[currentLang].copied);}catch(e){const i=document.createElement('input');i.value=text;document.body.appendChild(i);i.select();document.execCommand('copy');document.body.removeChild(i);showToast(translations[currentLang].copied);} }
+        function copyEmail() { if(currentEmail)copyToClipboard(currentEmail); }
+        function copyInboxEmail() { if(currentEmail)copyToClipboard(currentEmail); }
+        function copyWallet() { copyToClipboard(CONFIG.WALLET_ADDRESS); }
+        function toggleLanguage() { currentLang=currentLang==='ar'?'en':'ar'; document.documentElement.lang=currentLang; document.documentElement.dir=currentLang==='ar'?'rtl':'ltr'; document.getElementById('langBtn').textContent=currentLang==='ar'?'EN':'AR'; document.querySelectorAll('[data-ar][data-en]').forEach(el=>{if(el.tagName!=='INPUT'||!el.hasAttribute('value'))el.innerHTML=el.getAttribute('data-'+currentLang);}); localStorage.setItem('studentmail_lang',currentLang); }
+        function scrollToWallet() { document.getElementById('wallet').scrollIntoView({behavior:'smooth'}); }
+        function toggleMobileMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+        function closeModal() { document.getElementById('messageModal').classList.remove('active'); }
+
+        // ===== DOMAINS =====
+        async function fetchProviderDomains(key) {
+            const p = CONFIG.PROVIDERS[key];
+            if (p.kind === 'mailtm') {
+                const res = await fetch(p.base + '/domains');
+                if (!res.ok) throw new Error('Failed');
+                const data = await res.json();
+                return (data['hydra:member'] || []).map(d => d.domain);
+            }
+            if (p.kind === '1secmail') {
+                const res = await fetch(p.base + '?action=getDomainList');
+                if (!res.ok) throw new Error('Failed');
+                const data = await res.json();
+                return Array.isArray(data) ? data : [];
+            }
+            return [];
+        }
+        async function loadDomains() {
+            const select=document.getElementById('domainSelect'); const loading=document.getElementById('domainLoading');
+            loading.style.display='flex'; select.disabled=true;
+            domains=[]; domainProviderMap={};
+            try {
+                const keys=Object.keys(CONFIG.PROVIDERS);
+                const results=await Promise.allSettled(keys.map(k=>fetchProviderDomains(k)));
+                results.forEach((r,i)=>{ if(r.status==='fulfilled'){ r.value.forEach(d=>{ if(d&&!domainProviderMap[d]){ domains.push(d); domainProviderMap[d]=keys[i]; } }); } });
+                if(domains.length===0) throw new Error('No domains from any provider');
+                const edu=domains.filter(d=>/edu|student|academy|school|college|uni/i.test(d));
+                const other=domains.filter(d=>!edu.includes(d));
+                domains=[...edu,...other];
+                select.innerHTML='';
+                domains.forEach((d,i)=>{const opt=document.createElement('option');opt.value=d;opt.textContent='@'+d+(/edu|student/i.test(d)?' [EDU]':'');if(i===0)opt.selected=true;select.appendChild(opt);});
+                localStorage.setItem('studentmail_domains',JSON.stringify(domains));
+                localStorage.setItem('studentmail_domain_map',JSON.stringify(domainProviderMap));
+                showToast(translations[currentLang].domainLoaded);
+            } catch(e) {
+                const cachedD=localStorage.getItem('studentmail_domains'); const cachedM=localStorage.getItem('studentmail_domain_map');
+                if(cachedD&&cachedM){ domains=JSON.parse(cachedD); domainProviderMap=JSON.parse(cachedM); }
+                else { domains=['1secmail.com','1secmail.net','1secmail.org']; domains.forEach(d=>domainProviderMap[d]='secmail'); }
+                select.innerHTML=''; domains.forEach(d=>{const opt=document.createElement('option');opt.value=d;opt.textContent='@'+d;select.appendChild(opt);});
+                showToast(translations[currentLang].domainError,'error');
+            } finally { loading.style.display='none'; select.disabled=false; }
+        }
+        function onDomainChange() { currentDomain=document.getElementById('domainSelect').value; if(currentDomain&&emailUsername){currentEmail=emailUsername+'@'+currentDomain; document.getElementById('heroEmail').textContent=currentEmail; document.getElementById('inboxEmail').value=currentEmail; localStorage.setItem('studentmail_domain',currentDomain);} }
+
+        // ===== EMAIL API =====
+        function generateRandomString(length) { const chars='abcdefghijklmnopqrstuvwxyz0123456789'; let r=''; for(let i=0;i<length;i++)r+=chars.charAt(Math.floor(Math.random()*chars.length)); return r; }
+        async function createAccount(base,address,password) { const res=await fetch(base+'/accounts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({address,password})}); if(!res.ok){const e=await res.json().catch(()=>({})); throw new Error(e.detail||'Failed');} return await res.json(); }
+        async function getToken(base,address,password) { const res=await fetch(base+'/token',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({address,password})}); if(!res.ok)throw new Error('Failed'); const d=await res.json(); return d.token; }
+        async function getMessages(base,token) { const res=await fetch(base+'/messages',{headers:{'Authorization':'Bearer '+token}}); if(!res.ok)throw new Error('Failed'); const d=await res.json(); return d['hydra:member']||[]; }
+        async function getMessage(base,token,id) { const res=await fetch(base+'/messages/'+id,{headers:{'Authorization':'Bearer '+token}}); if(!res.ok)throw new Error('Failed'); return await res.json(); }
+        async function secmailGetMessages(login,domain) { const res=await fetch(CONFIG.PROVIDERS.secmail.base+'?action=getMessages&login='+encodeURIComponent(login)+'&domain='+encodeURIComponent(domain)); if(!res.ok)throw new Error('Failed'); return await res.json(); }
+        async function secmailGetMessage(login,domain,id) { const res=await fetch(CONFIG.PROVIDERS.secmail.base+'?action=readMessage&login='+encodeURIComponent(login)+'&domain='+encodeURIComponent(domain)+'&id='+id); if(!res.ok)throw new Error('Failed'); return await res.json(); }
+
+        async function createTempEmail() {
+            showLoading(true, currentLang==='ar'?'جاري إنشاء بريدك المؤقت...':'Creating your temporary email...');
+            try {
+                const select=document.getElementById('domainSelect');
+                if(!domains.length||select.options.length<=1)await loadDomains();
+                currentDomain=select.value||domains[0];
+                if(!currentDomain){showToast(translations[currentLang].selectDomain,'warning'); showLoading(false); return;}
+                emailProvider=domainProviderMap[currentDomain]||'mailtm';
+                emailUsername='student'+generateRandomString(8);
+                const address=emailUsername+'@'+currentDomain;
+                if(emailProvider==='secmail'){
+                    emailToken=null; emailPassword=null;
+                } else {
+                    const base=CONFIG.PROVIDERS[emailProvider].base;
+                    const password=generateRandomString(16);
+                    await createAccount(base,address,password);
+                    emailToken=await getToken(base,address,password);
+                    emailPassword=password;
+                }
+                currentEmail=address; timeLeft=3600;
+                const encrypted=Security.encrypt({email:currentEmail,username:emailUsername,domain:currentDomain,provider:emailProvider,token:emailToken,password:emailPassword,time:Date.now()},ENCRYPTION_KEY);
+                localStorage.setItem('studentmail_session',encrypted);
+                document.getElementById('heroEmail').textContent=currentEmail;
+                document.getElementById('inboxEmail').value=currentEmail;
+                document.getElementById('inbox').classList.add('active');
+                document.getElementById('inbox').scrollIntoView({behavior:'smooth'});
+                startTimer(); startPolling();
+                showToast(translations[currentLang].emailCreated);
+                await refreshInbox();
+            } catch(e) { console.error(e); showToast(translations[currentLang].error,'error'); }
+            finally { showLoading(false); }
+        }
+        async function createNewEmail() { clearInterval(pollInterval); clearInterval(timerInterval); currentEmail=null; emailUsername=null; emailToken=null; emailPassword=null; emailProvider=null; messages=[]; localStorage.removeItem('studentmail_session'); await createTempEmail(); }
+        async function refreshInbox() {
+            if(!currentEmail)return;
+            const btn=document.getElementById('refreshBtn'); btn.classList.add('spinning');
+            try{
+                let newMessages;
+                if(emailProvider==='secmail'){
+                    const raw=await secmailGetMessages(emailUsername,currentDomain);
+                    newMessages=(raw||[]).map(m=>({id:m.id, from:{address:m.from}, subject:m.subject, createdAt:m.date, seen:false}));
+                } else {
+                    const base=CONFIG.PROVIDERS[emailProvider].base;
+                    newMessages=await getMessages(base,emailToken);
+                }
+                messages=newMessages; renderMessages();
+                if(newMessages.length>0)showToast(translations[currentLang].refreshSuccess+' ('+newMessages.length+')');
+            }catch(e){}finally{btn.classList.remove('spinning');}
+        }
+        function renderMessages() { const container=document.getElementById('messagesContainer'); const countEl=document.getElementById('msgCount'); countEl.textContent=messages.length; if(messages.length===0){container.innerHTML='<div class="empty-state"><i class="fas fa-inbox"></i><h3>'+(currentLang==='ar'?'لا توجد رسائل':'No messages')+'</h3><p>'+(currentLang==='ar'?'سيتم عرض الرسائل الواردة هنا تلقائياً':'Incoming messages will appear here automatically')+'</p></div>'; return;} container.innerHTML=messages.map((msg,i)=>{const from=msg.from?.name||msg.from?.address||'Unknown'; const subject=Security.sanitize(msg.subject||(currentLang==='ar'?'بدون موضوع':'No subject')); const date=msg.createdAt?new Date(msg.createdAt).toLocaleTimeString(currentLang==='ar'?'ar-DZ':'en-US'):'Now'; const isUnread=!msg.seen; return '<div class="message-row '+(isUnread?'unread':'')+'" onclick="openMessage('+i+')"><div class="message-avatar">'+Security.escapeHtml(from.charAt(0).toUpperCase())+'</div><div class="message-content"><h4>'+subject+'</h4><p>'+Security.escapeHtml(from)+'</p></div><div class="message-meta"><span class="time">'+date+'</span></div></div>';}).join(''); }
+        async function openMessage(index) {
+            const msg=messages[index]; if(!msg)return;
+            showLoading(true,currentLang==='ar'?'جاري تحميل الرسالة...':'Loading message...');
+            try{
+                let fullMsg;
+                if(emailProvider==='secmail'){
+                    const raw=await secmailGetMessage(emailUsername,currentDomain,msg.id);
+                    fullMsg={ subject:raw.subject, from:{address:raw.from}, createdAt:raw.date, text:raw.textBody||raw.body||'', html:raw.htmlBody||'' };
+                } else {
+                    const base=CONFIG.PROVIDERS[emailProvider].base;
+                    fullMsg=await getMessage(base,emailToken,msg.id);
+                }
+                document.getElementById('modalSubject').textContent=Security.sanitize(fullMsg.subject||(currentLang==='ar'?'بدون موضوع':'No subject')); document.getElementById('modalFrom').textContent=Security.escapeHtml(fullMsg.from?.address||'Unknown'); document.getElementById('modalDate').textContent=fullMsg.createdAt?new Date(fullMsg.createdAt).toLocaleString(currentLang==='ar'?'ar-DZ':'en-US'):'---'; let bodyText=fullMsg.text||fullMsg.html||''; if(bodyText.includes('<')){const t=document.createElement('div');t.innerHTML=bodyText;bodyText=t.textContent||t.innerText||bodyText;} document.getElementById('modalBody').textContent=bodyText; document.getElementById('messageModal').classList.add('active');
+            }catch(e){showToast(translations[currentLang].error,'error');}finally{showLoading(false);}
+        }
+        function startPolling() { clearInterval(pollInterval); pollInterval=setInterval(()=>{if(currentEmail)refreshInbox();},15000); }
+        function startTimer() { clearInterval(timerInterval); timerInterval=setInterval(()=>{timeLeft--; if(timeLeft<=0){clearInterval(timerInterval); clearInterval(pollInterval); document.getElementById('timer').textContent='00:00'; showToast(translations[currentLang].timerExpired,'warning'); return;} const mins=Math.floor(timeLeft/60).toString().padStart(2,'0'); const secs=(timeLeft%60).toString().padStart(2,'0'); document.getElementById('timer').textContent=mins+':'+secs;},1000); }
+
+        // ===== PAYMENT =====
+        async function verifyPayment() {
+            if(!Security.rateLimit.check('verify_payment',5,60000)){showToast(translations[currentLang].rateLimit,'warning'); return;}
+            const txidInput=document.getElementById('txidInput'); const statusEl=document.getElementById('verifyStatus'); const verifyBtn=document.getElementById('verifyBtn');
+            const txid=txidInput.value.trim();
+            if(!txid){showToast(translations[currentLang].enterTxid,'warning'); return;}
+            if(!/^[a-f0-9]{64}$/i.test(txid)){showToast(translations[currentLang].invalidTxid,'error'); return;}
+            if(isPremium){showToast(translations[currentLang].premiumAlready,'warning'); return;}
+            verifyBtn.disabled=true; statusEl.className='verify-status pending'; statusEl.textContent=currentLang==='ar'?'جاري التحقق...':'Verifying...';
+            try {
+                let verified=false;
+                try{ const res=await fetch(CONFIG.TRONSCAN_API+'/api/transaction-info?hash='+encodeURIComponent(txid)); if(res.ok){ const d=await res.json(); if(d&&d.hash){ const toAddr=(d.toAddress||d.contractData?.[0]?.parameter?.value?.to_address||'').toLowerCase(); const amount=parseInt(d.contractData?.[0]?.parameter?.value?.amount||'0')/1e6; if(toAddr===CONFIG.WALLET_ADDRESS.toLowerCase()&&amount>=CONFIG.PREMIUM_PRICE*0.95)verified=true; } } }catch(e){}
+                if(!verified){ try{ const res=await fetch(CONFIG.TRONGRID_API+'/v1/transactions/'+txid+'/events'); if(res.ok){ const d=await res.json(); const events=d.data||[]; for(const event of events){ const toAddr=(event.result?.to||event.result?.['_to']||'').toLowerCase(); const amount=parseInt(event.result?.value||event.result?.['_value']||'0')/1e6; if(toAddr===CONFIG.WALLET_ADDRESS.toLowerCase()&&amount>=CONFIG.PREMIUM_PRICE*0.95){verified=true; break;} } } }catch(e){} }
+                if(verified){ activatePremium(txid); } else { statusEl.className='verify-status error'; statusEl.textContent=translations[currentLang].verifyError; showToast(translations[currentLang].verifyError,'error'); }
+            } catch(e) { statusEl.className='verify-status error'; statusEl.textContent=translations[currentLang].verifyError; showToast(translations[currentLang].verifyError,'error'); }
+            finally { verifyBtn.disabled=false; }
+        }
+        function activatePremium(txid) {
+            isPremium=true;
+            const encrypted=Security.encrypt({premium:true,txid:txid,date:new Date().toISOString(),fingerprint:Security.getFingerprint()},ENCRYPTION_KEY);
+            localStorage.setItem('studentmail_premium',encrypted);
+            const badge=document.getElementById('premiumBadge'); badge.className='premium-badge active'; badge.innerHTML='<i class="fas fa-check-circle"></i> '+(currentLang==='ar'?'مفعل':'Active');
+            const statusEl=document.getElementById('verifyStatus'); statusEl.className='verify-status success'; statusEl.textContent=translations[currentLang].premiumActivated;
+            showToast(translations[currentLang].premiumActivated);
+            console.log('Premium activated:',{txid,amount:5,wallet:CONFIG.WALLET_ADDRESS,time:new Date().toISOString()});
+        }
+        function checkPremiumStatus() { const saved=localStorage.getItem('studentmail_premium'); if(saved){ try{ const d=Security.decrypt(saved,ENCRYPTION_KEY); if(d&&d.premium){isPremium=true; const badge=document.getElementById('premiumBadge'); badge.className='premium-badge active'; badge.innerHTML='<i class="fas fa-check-circle"></i> '+(currentLang==='ar'?'مفعل':'Active');} }catch(e){localStorage.removeItem('studentmail_premium');} } }
+
+        // ===== INIT =====
+        async function init() {
+            // DevTools detection (subtle)
+            setInterval(()=>{const w=window.outerWidth-window.innerWidth; const h=window.outerHeight-window.innerHeight; if(w>160||h>160){document.body.innerHTML='<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#0A0E13;color:#EF4444;font-family:Cairo;font-size:24px;"><div>🚫 Access Denied</div></div>'; console.clear(); setInterval(()=>console.clear(),100);}},1000);
+
+            const savedLang=localStorage.getItem('studentmail_lang');
+            if(savedLang&&savedLang!==currentLang)toggleLanguage();
+            checkPremiumStatus();
+            await loadDomains();
+            const savedSession=localStorage.getItem('studentmail_session');
+            if(savedSession){ try{ const d=Security.decrypt(savedSession,ENCRYPTION_KEY); if(d&&d.email&&d.time){ const elapsed=Math.floor((Date.now()-d.time)/1000); if(elapsed<3600){ currentEmail=d.email; emailUsername=d.username; currentDomain=d.domain; emailProvider=d.provider||'mailtm'; emailToken=d.token; emailPassword=d.password; timeLeft=3600-elapsed; const select=document.getElementById('domainSelect'); if(domains.includes(currentDomain))select.value=currentDomain; document.getElementById('heroEmail').textContent=currentEmail; document.getElementById('inboxEmail').value=currentEmail; document.getElementById('inbox').classList.add('active'); startPolling(); startTimer(); await refreshInbox(); } else { localStorage.removeItem('studentmail_session'); } } }catch(e){localStorage.removeItem('studentmail_session');} }
+            window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
+        }
+
+        document.getElementById('messageModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+        document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+        init();
+    </script>
+</body>
+</html>
